@@ -23,10 +23,7 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
 
   def application do
     [
-      applications: [
-        :logger,
-        :fs,
-      ]
+      applications: []
     ]
   end
 

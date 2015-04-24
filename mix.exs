@@ -15,8 +15,8 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
       description: "Automatically run tests on file change",
       package: [
         contributors: ["Louis Pilfold"],
-        licences: ["MIT"],
-        links: %{"GitHub" => "https://github.com/lpil/mix-test.watch"}
+        licenses: ["MIT"],
+        links: %{"GitHub" => "https://github.com/lpil/mix-test.watch"},
       ]
     ]
   end

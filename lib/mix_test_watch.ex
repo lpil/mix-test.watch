@@ -8,7 +8,10 @@ defmodule Mix.Tasks.Test.Watch do
   end
 
   def setup(args) do
-    Agent.start_link( fn -> %{ not_running_tests?: true, args: args} end, name: :mix_test_watch_state )
+    Agent.start_link(
+      fn -> %{ not_running_tests?: true, args: args} end,
+      name: :mix_test_watch_state
+    )
     Application.start :fs
     GenServer.start_link( __MODULE__, [], name: __MODULE__ )
   end
@@ -35,13 +38,16 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp run_tests(agent \\ :mix_test_watch_state) do
     IO.puts "Running tests..."
-    args = Agent.get_and_update( agent, fn x -> { x.args, %{ x | not_running_tests?: false } } end )
+    args = Agent.get_and_update(
+      agent, fn x -> { x.args, %{ x | not_running_tests?: false } } end
+    )
     IO.puts( to_string :os.cmd(mix_cmd(args)) )
     Agent.update( agent, fn x -> %{ x | not_running_tests?: true } end )
   end
 
   defp mix_cmd(args) do
+    args = Enum.join(args, " ")
     ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
-    to_char_list ~s[MIX_ENV=test mix do run -e '#{ansi}', test #{Enum.join(args, " ")}]
+    to_char_list ~s[MIX_ENV=test mix do run -e '#{ansi}', test #{args}]
   end
 end

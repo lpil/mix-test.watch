@@ -1,7 +1,11 @@
 defmodule Mix.Tasks.Test.WatchTest do
   use ExUnit.Case
+  use ShouldI
+  # import Mock
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  alias Mix.Tasks.Test.Watch
+
+  should "run tests" do
+    "but I'm not sure how to test this..."
   end
 end

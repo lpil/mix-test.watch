@@ -29,7 +29,9 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
 
   defp deps do
     [
-      {:fs, "~> 0.9.1"}
+      {:fs, "~> 0.9.1"},
+      {:shouldi, "~> 0.2.2", only: :test},
+      {:mock, "~> 0.1.0", only: :test},
     ]
   end
 end

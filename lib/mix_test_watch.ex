@@ -3,12 +3,14 @@ defmodule Mix.Tasks.Test.Watch do
   use GenServer
 
   def run(_) do
-    {:ok, agent} = Agent.start_link(
-      fn -> true end, name: :mix_test_watch_state
-    )
+    setup
+    :timer.sleep :infinity
+  end
+
+  def setup do
+    Agent.start_link( fn -> true end, name: :mix_test_watch_state )
     Application.start :fs
     GenServer.start_link( __MODULE__, [], name: __MODULE__ )
-    :timer.sleep :infinity
   end
 
 
@@ -31,16 +33,15 @@ defmodule Mix.Tasks.Test.Watch do
     Regex.match?( ~r/\.exs?\z/i, path )
   end
 
-  defp run_tests do
+  defp run_tests(agent \\ :mix_test_watch_state) do
     IO.puts "Running tests..."
-    Agent.update( :mix_test_watch_state, fn _ -> false end )
+    Agent.update( agent, fn _ -> false end )
     IO.puts( to_string :os.cmd(mix_cmd) )
-    Agent.update( :mix_test_watch_state, fn _ -> true end )
+    Agent.update( agent, fn _ -> true end )
   end
 
   defp mix_cmd do
-    enable_ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
-    set_mix_env = ~S[System.put_env("MIX_ENV", "test");]
-    to_char_list  ~s[mix do run -e '#{enable_ansi} #{set_mix_env}', test]
+    ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
+    to_char_list ~s[MIX_ENV=test mix do run -e '#{ansi}', test]
   end
 end

@@ -3,8 +3,16 @@ defmodule Mix.Tasks.Test.Watch do
   use GenServer
 
   def run(args) do
+    # If MIX_ENV not setted and there is no prefered env, should test setted, as mix do
+    if is_nil(System.get_env("MIX_ENV")) && (env = preferred_cli_env(:test)) do
+      Mix.env(env)
+    end
     setup(args)
     :timer.sleep :infinity
+  end
+
+  defp preferred_cli_env(task) do
+    Mix.Project.config[:preferred_cli_env][task] || :test
   end
 
   def setup(args) do
@@ -15,7 +23,6 @@ defmodule Mix.Tasks.Test.Watch do
     Application.start :fs
     GenServer.start_link( __MODULE__, [], name: __MODULE__ )
   end
-
 
   def init(_) do
     :fs.subscribe
@@ -48,8 +55,8 @@ defmodule Mix.Tasks.Test.Watch do
     test_files = Mix.Utils.extract_files(test_paths, "*") |> Enum.map(&Path.expand/1)
     # to force recompilation of test modules, we need to unload files on code_server
     :elixir_code_server.cast({:unload_files, test_files})
-
-    Mix.Tasks.Test.run(args)
+    ["loadpaths", "deps.loadpaths", "test"] |> Enum.map(&Mix.Task.reenable/1)
+    Mix.Task.run("test", args)
     # As the configuration will grow indefinitly, we cut it after each run
     :elixir_config.put(:at_exit, [])
 

@@ -41,13 +41,18 @@ defmodule Mix.Tasks.Test.Watch do
     args = Agent.get_and_update(
       agent, fn x -> { x.args, %{ x | not_running_tests?: false } } end
     )
-    IO.puts( to_string :os.cmd(mix_cmd(args)) )
-    Agent.update( agent, fn x -> %{ x | not_running_tests?: true } end )
-  end
 
-  defp mix_cmd(args) do
-    args = Enum.join(args, " ")
-    ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
-    to_char_list ~s[MIX_ENV=test mix do run -e '#{ansi}', test #{args}]
+    project = Mix.Project.config
+    test_paths = project[:test_paths] || ["test"]
+
+    test_files = Mix.Utils.extract_files(test_paths, "*") |> Enum.map(&Path.expand/1)
+    # to force recompilation of test modules, we need to unload files on code_server
+    :elixir_code_server.cast({:unload_files, test_files})
+
+    Mix.Tasks.Test.run(args)
+    # As the configuration will grow indefinitly, we cut it after each run
+    :elixir_config.put(:at_exit, [])
+
+    Agent.update( agent, fn x -> %{ x | not_running_tests?: true } end )
   end
 end

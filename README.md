@@ -13,7 +13,7 @@ Add it to your dependencies
 ```elixir
 # mix.exs
 def deps do
-  [{:mix_test_watch, "~> 0.0.2"}]
+  [{:mix_test_watch, "~> 0.1.0"}]
 end
 ```
 

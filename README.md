@@ -5,7 +5,7 @@ Automatically run your Elixir project's tests each time you save a file.
 
 ## Usage
 
-Add it to your dependacies
+Add it to your dependencies
 
 ```elixir
 # mix.exs

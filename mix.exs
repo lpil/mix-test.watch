@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Test.Watch.Mixfile do
   use Mix.Project
 
-  @version "0.0.1"
+  @version "0.0.2"
 
   def project do
     [
@@ -30,6 +30,7 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
   defp deps do
     [
       {:fs, "~> 0.9.1"},
+      {:porcelain, "~> 2.0.0"},
       {:shouldi, "~> 0.2.2", only: :test},
       {:mock, "~> 0.1.0", only: :test},
     ]

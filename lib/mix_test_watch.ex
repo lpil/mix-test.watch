@@ -8,41 +8,30 @@ defmodule Mix.Tasks.Test.Watch do
   end
 
   def setup(args) do
-    Agent.start_link(
-      fn -> %{ not_running_tests?: true, args: args} end,
-      name: :mix_test_watch_state
-    )
     Application.start :fs
-    GenServer.start_link( __MODULE__, [], name: __MODULE__ )
+    GenServer.start_link( __MODULE__, args, name: __MODULE__ )
   end
 
 
-  def init(_) do
+  def init(args) do
     :fs.subscribe
-    {:ok, []}
+    {:ok, %{ args: args }}
   end
 
-  def handle_info({_pid, {:fs, :file_event}, {path, _event}}, _) do
-    path = to_string path
-    if watching?(path) && not_running_tests? do run_tests end
-    {:noreply, []}
-  end
-
-  defp not_running_tests? do
-    Agent.get( :mix_test_watch_state, fn x -> x.not_running_tests? end )
+  def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
+    if watching?( to_string path ) do
+      run_tests( state.args )
+    end
+    {:noreply, state}
   end
 
   defp watching?(path) do
     Regex.match?( ~r/\.exs?\z/i, path )
   end
 
-  defp run_tests(agent \\ :mix_test_watch_state) do
-    IO.puts "Running tests..."
-    args = Agent.get_and_update(
-      agent, fn x -> { x.args, %{ x | not_running_tests?: false } } end
-    )
-    IO.puts( to_string :os.cmd(mix_cmd(args)) )
-    Agent.update( agent, fn x -> %{ x | not_running_tests?: true } end )
+  defp run_tests(args) do
+    IO.puts "\nRunning tests..."
+    IO.puts( to_string :os.cmd(mix_cmd args) )
   end
 
   defp mix_cmd(args) do

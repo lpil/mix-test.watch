@@ -26,6 +26,13 @@ defmodule Mix.Tasks.Test.Watch do
 
 
 
+  defp flush do
+    receive do
+      msg     -> flush
+      after 0 -> :ok
+    end
+  end
+
   defp watching?(path) do
     Regex.match?( ~r/\.e(ex|xs?)\z/i, path )
   end
@@ -33,6 +40,7 @@ defmodule Mix.Tasks.Test.Watch do
   defp run_tests(args) do
     IO.puts "\nRunning tests..."
     Porcelain.shell( mix_cmd(args), out: IO.stream(:stdio, :line) )
+    flush
   end
 
   defp mix_cmd(args) do

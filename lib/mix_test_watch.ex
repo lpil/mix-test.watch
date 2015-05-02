@@ -28,7 +28,7 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp flush do
     receive do
-      msg     -> flush
+      _       -> flush
       after 0 -> :ok
     end
   end
@@ -45,6 +45,6 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp mix_cmd(args) do
     ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
-    ~s[MIX_ENV=test mix do run -e '#{ansi}', test #{args}]
+    "MIX_ENV=test mix do run -e '#{ansi}', test #{args}"
   end
 end

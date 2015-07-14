@@ -2,6 +2,11 @@ defmodule Mix.Tasks.Test.Watch do
   use Mix.Task
   use GenServer
 
+  @shortdoc "Auto-run tests"
+
+  @moduledoc """
+    A task for running tests whenever source files change.
+  """
   def run(args) do
     args = Enum.join(args, " ")
     Application.start :fs, :permanent

@@ -5,7 +5,7 @@ defmodule Mix.Tasks.Test.Watch do
   @shortdoc "Auto-run tests"
 
   @moduledoc """
-    A task for running tests whenever source files change.
+  A task for running tests whenever source files change.
   """
   def run(args) do
     args = Enum.join(args, " ")

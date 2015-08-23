@@ -13,14 +13,14 @@ Add it to your dependencies
 ```elixir
 # mix.exs
 def deps do
-  [{:mix_test_watch, "~> 0.1.2", only: :dev}]
+  [{:mix_test_watch, "~> 0.2", only: :dev}]
 end
 ```
 
 Run the mix task
 
 ```
-$ mix test.watch
+mix test.watch
 ```
 
 Start hacking :)

@@ -1,23 +1,12 @@
 defmodule Mix.Tasks.Test.WatchTest do
   use ExUnit.Case
-  use ShouldI
 
-  should "run tests 1" do
-    "but I'm not sure how to test this..."
-  end
+  @delays 0..29 |> Enum.map(fn n -> n * 2 end)
 
-  should "run tests 2" do
-    :timer.sleep 100
-    "but I'm not sure how to test this..."
-  end
-
-  should "run tests 3" do
-    :timer.sleep 200
-    "but I'm not sure how to test this..."
-  end
-
-  should "run tests 4" do
-    :timer.sleep 300
-    "but I'm not sure how to test this..."
+  for delay <- @delays do
+    test "A dot after #{delay} ms" do
+      :timer.sleep unquote(delay)
+      nil
+    end
   end
 end

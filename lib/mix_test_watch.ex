@@ -2,7 +2,7 @@ defmodule Mix.Tasks.Test.Watch do
   use Mix.Task
   use GenServer
 
-  @shortdoc "Auto-run tests"
+  @shortdoc "Automatically run tests on file changes"
 
   @moduledoc """
   A task for running tests whenever source files change.
@@ -10,12 +10,12 @@ defmodule Mix.Tasks.Test.Watch do
   def run(args) do
     args = Enum.join(args, " ")
     Application.start :fs, :permanent
-    Application.start :porcelain, :permanent
     GenServer.start_link( __MODULE__, args, name: __MODULE__ )
     :timer.sleep :infinity
   end
 
 
+  # Genserver callbacks
 
   def init(args) do
     :fs.subscribe
@@ -31,6 +31,29 @@ defmodule Mix.Tasks.Test.Watch do
 
 
 
+  defp watching?(path) do
+    Regex.match?( ~r/\.(ex|exs|eex)\z/i, path )
+  end
+
+  defp run_tests(args) do
+    IO.puts "\nRunning tests..."
+    args |> mix_cmd |> shell_exec
+    flush
+  end
+
+  defp mix_cmd(args) do
+    ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
+    """
+    bash -c "MIX_ENV=test mix do run -e '#{ansi}', test #{args}"
+    """
+  end
+
+  defp shell_exec(exe) do
+    args = ~w(stream binary exit_status use_stdio stderr_to_stdout)a
+    Port.open({:spawn, exe}, args) |> results_loop
+  end
+
+
   defp flush do
     receive do
       _       -> flush
@@ -38,18 +61,14 @@ defmodule Mix.Tasks.Test.Watch do
     end
   end
 
-  defp watching?(path) do
-    Regex.match?( ~r/\.e(ex|xs?)\z/i, path )
-  end
+  defp results_loop(port) do
+    receive do
+      {^port, {:data, data}} ->
+        IO.write(data)
+        results_loop(port)
 
-  defp run_tests(args) do
-    IO.puts "\nRunning tests..."
-    Porcelain.shell( mix_cmd(args), out: IO.stream(:stdio, :line) )
-    flush
-  end
-
-  defp mix_cmd(args) do
-    ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
-    "MIX_ENV=test mix do run -e '#{ansi}', test #{args}"
+      {^port, {:exit_status, status}} ->
+        status
+    end
   end
 end

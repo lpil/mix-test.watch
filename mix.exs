@@ -31,6 +31,7 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
   defp deps do
     [
       {:fs, "~> 0.9.1"},
+      {:dogma, only: ~w(dev test)a},
     ]
   end
 end

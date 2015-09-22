@@ -1,0 +1,19 @@
+language: elixir
+
+elixir:
+  - 1.0.5
+
+otp_release:
+  - 17.4
+
+env: MIX_ENV=test
+
+sudo: false # faster builds
+
+notifications:
+  email: false
+
+script:
+  - mix compile --warnings-as-errors
+  - mix test
+  - mix dogma

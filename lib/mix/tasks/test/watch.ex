@@ -51,7 +51,7 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp shell_exec(exe) do
     args = ~w(stream binary exit_status use_stdio stderr_to_stdout)a
-    Port.open({:spawn, exe}, args) |> results_loop
+    {:spawn, exe} |> Port.open(args) |> results_loop
   end
 
 

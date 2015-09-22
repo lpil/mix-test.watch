@@ -11,6 +11,7 @@ defmodule Mix.Tasks.Test.Watch do
     args = Enum.join(args, " ")
     Application.start :fs, :permanent
     GenServer.start_link( __MODULE__, args, name: __MODULE__ )
+    run_tests
     :timer.sleep :infinity
   end
 
@@ -35,7 +36,7 @@ defmodule Mix.Tasks.Test.Watch do
     Regex.match?( ~r/\.(ex|exs|eex)\z/i, path )
   end
 
-  defp run_tests(args) do
+  defp run_tests(args \\ "") do
     IO.puts "\nRunning tests..."
     args |> mix_cmd |> shell_exec
     flush

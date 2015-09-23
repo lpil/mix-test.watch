@@ -2,15 +2,21 @@ defmodule Mix.Tasks.Test.Watch do
   use Mix.Task
   use GenServer
 
-  @shortdoc "Automatically run tests on file changes"
+  alias MixTestWatch, as: M
 
+  @shortdoc """
+  Automatically run tests on file changes
+  """
   @moduledoc """
   A task for running tests whenever source files change.
   """
+
+  @spec run([String.t]) :: no_return
+
   def run(args) do
-    args = Enum.join(args, " ")
-    Application.start :fs, :permanent
-    GenServer.start_link( __MODULE__, args, name: __MODULE__ )
+    args     = Enum.join(args, " ")
+    :ok      = Application.start :fs, :permanent
+    {:ok, _} = GenServer.start_link( __MODULE__, args, name: __MODULE__ )
     run_tests
     :timer.sleep :infinity
   end
@@ -18,29 +24,37 @@ defmodule Mix.Tasks.Test.Watch do
 
   # Genserver callbacks
 
+  @spec init(String.t) :: {:ok, %{ args: String.t}}
+
   def init(args) do
-    :fs.subscribe
+    :ok = :fs.subscribe
     {:ok, %{ args: args }}
   end
 
+  @type fs_path    :: char_list
+  @type fs_event   :: {:fs, :file_event}
+  @type fs_details :: {fs_path, any}
+  @spec handle_info({pid, fs_event, fs_details}, %{}) :: {:noreply, %{}}
+
   def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
-    if watching?( to_string path ) do
+    if M.Path.watching?( to_string path ) do
       run_tests( state.args )
     end
     {:noreply, state}
   end
 
 
-
-  defp watching?(path) do
-    Regex.match?( ~r/\.(ex|exs|eex)\z/i, path )
-  end
+  @spec run_tests(String.t) :: :ok
 
   defp run_tests(args \\ "") do
     IO.puts "\nRunning tests..."
-    args |> mix_cmd |> shell_exec
+    :ok = args |> mix_cmd |> shell_exec
     flush
+    :ok
   end
+
+
+  @spec mix_cmd(String.t) :: String.t
 
   defp mix_cmd(args) do
     ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
@@ -49,11 +63,17 @@ defmodule Mix.Tasks.Test.Watch do
     """
   end
 
+
+  @spec shell_exec(String.t) :: :ok
+
   defp shell_exec(exe) do
     args = ~w(stream binary exit_status use_stdio stderr_to_stdout)a
     {:spawn, exe} |> Port.open(args) |> results_loop
+    :ok
   end
 
+
+  @spec flush :: :ok
 
   defp flush do
     receive do
@@ -61,6 +81,9 @@ defmodule Mix.Tasks.Test.Watch do
       after 0 -> :ok
     end
   end
+
+
+  @spec results_loop(port) :: pos_integer
 
   defp results_loop(port) do
     receive do

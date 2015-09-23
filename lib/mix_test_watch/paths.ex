@@ -10,6 +10,8 @@ defmodule MixTestWatch.Path do
     _build/
   )
 
+  @spec watching?(String.t) :: boolean
+
   def watching?(path) do
     watched_directory?( path ) && elixir_extension?( path )
   end

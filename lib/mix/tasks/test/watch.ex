@@ -48,20 +48,10 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp run_tests(args \\ "") do
     IO.puts "\nRunning tests..."
-    :ok = args |> M.Command.build |> shell_exec
+    :ok = args |> M.Command.build |> M.Command.exec
     flush
     :ok
   end
-
-
-  @spec shell_exec(String.t) :: :ok
-
-  defp shell_exec(exe) do
-    args = ~w(stream binary exit_status use_stdio stderr_to_stdout)a
-    {:spawn, exe} |> Port.open(args) |> results_loop
-    :ok
-  end
-
 
   @spec flush :: :ok
 
@@ -69,20 +59,6 @@ defmodule Mix.Tasks.Test.Watch do
     receive do
       _       -> flush
       after 0 -> :ok
-    end
-  end
-
-
-  @spec results_loop(port) :: pos_integer
-
-  defp results_loop(port) do
-    receive do
-      {^port, {:data, data}} ->
-        IO.write(data)
-        results_loop(port)
-
-      {^port, {:exit_status, status}} ->
-        status
     end
   end
 end

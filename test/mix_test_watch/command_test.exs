@@ -1,5 +1,7 @@
 defmodule MixTestWatch.CommandTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case
+
+  import ExUnit.CaptureIO
 
   alias MixTestWatch.Command
 
@@ -12,5 +14,12 @@ defmodule MixTestWatch.CommandTest do
 
   test "build passes arguments to the test task" do
     assert "Hi there" |> Command.build |> String.ends_with?(~s(test Hi there"))
+  end
+
+  test "exec runs a given command, streaming to STDOUT" do
+    printed = capture_io fn->
+      Command.exec "echo Hello, world!"
+    end
+    assert printed == "Hello, world!\n"
   end
 end

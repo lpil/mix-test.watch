@@ -48,19 +48,9 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp run_tests(args \\ "") do
     IO.puts "\nRunning tests..."
-    :ok = args |> mix_cmd |> shell_exec
+    :ok = args |> M.Command.build |> shell_exec
     flush
     :ok
-  end
-
-
-  @spec mix_cmd(String.t) :: String.t
-
-  defp mix_cmd(args) do
-    ansi = "Application.put_env(:elixir, :ansi_enabled, true);"
-    """
-    sh -c "MIX_ENV=test mix do run -e '#{ansi}', test #{args}"
-    """
   end
 
 

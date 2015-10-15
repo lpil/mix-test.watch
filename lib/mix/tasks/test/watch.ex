@@ -48,7 +48,7 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp run_tests(args \\ "") do
     IO.puts "\nRunning tests..."
-    :ok = args |> M.Command.build |> M.Command.exec
+    :ok = M.Command.build |> M.Command.exec
     flush
     :ok
   end

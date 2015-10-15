@@ -27,6 +27,18 @@ mix test.watch
 
 Start hacking :)
 
+## Running Additional Mix Tasks
+
+```elixir
+# config/config.exs
+
+config :mix_test_watch,
+  before: ~w( dogma )
+
+config :mix_test_watch,
+  after: ~w( some_other_task )
+```
+
 ## Notes
 
 On Linux you may need to install `inotify-tools`.

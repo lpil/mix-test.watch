@@ -46,7 +46,7 @@ defmodule Mix.Tasks.Test.Watch do
 
   @spec run_tests(String.t) :: :ok
 
-  defp run_tests(args \\ "") do
+  defp run_tests(_args \\ "") do
     IO.puts "\nRunning tests..."
     :ok = M.Command.build |> M.Command.exec
     flush

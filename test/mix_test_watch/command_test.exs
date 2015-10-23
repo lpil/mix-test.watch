@@ -10,7 +10,7 @@ defmodule MixTestWatch.CommandTest do
     expected = ~s(sh -c "MIX_ENV=test mix do run -e )
             <> "'Application.put_env(:elixir, :ansi_enabled, true);'"
             <> ~s(, test")
-    TemporaryEnv.set :mix_test_watch, tasks: nil do
+    TemporaryEnv.delete :mix_test_watch, :tasks do
       assert Command.build == expected
     end
   end

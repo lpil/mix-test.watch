@@ -3,6 +3,8 @@ defmodule MixTestWatch.Command do
   Responsible for forming our shell commands.
   """
 
+  @default_tasks ~w(test)a
+
   @spec build :: String.t
 
   @doc """
@@ -30,8 +32,7 @@ defmodule MixTestWatch.Command do
 
 
   defp tasks do
-    tasks = :mix_test_watch |> Application.get_env :tasks
-    tasks || [:test]
+    Application.get_env(:mix_test_watch, :tasks, @default_tasks)
   end
 
   defp task_command(task) do

@@ -47,6 +47,7 @@ defmodule Mix.Tasks.Test.Watch do
   @spec run_tests(String.t) :: :ok
 
   defp run_tests(_args \\ "") do
+    clear_term
     IO.puts "\nRunning tests..."
     :ok = M.Command.build |> M.Command.exec
     flush
@@ -60,5 +61,11 @@ defmodule Mix.Tasks.Test.Watch do
       _       -> flush
       after 0 -> :ok
     end
+  end
+
+  @spec clear_term() :: no_return
+
+  defp clear_term do
+    :io.format(:os.cmd('clear'))
   end
 end

@@ -4,6 +4,7 @@ defmodule MixTestWatch.Command do
   """
 
   @default_tasks ~w(test)a
+  @default_prefix "mix"
 
   @spec build :: String.t
 
@@ -35,8 +36,12 @@ defmodule MixTestWatch.Command do
     Application.get_env(:mix_test_watch, :tasks, @default_tasks)
   end
 
+  defp prefix do
+    Application.get_env(:mix_test_watch, :prefix, @default_prefix)
+  end
+
   defp task_command(task) do
-    ~s(MIX_ENV=test mix do #{ansi}, #{task})
+    ~s(MIX_ENV=test #{prefix} do #{ansi}, #{task})
   end
 
 

@@ -19,6 +19,14 @@ defmodule MixTestWatch.PathTest do
     assert watching? "foo.erl"
   end
 
+  test ".xrl files are watched" do
+    assert watching? "foo.xrl"
+  end
+
+  test ".yrl files are watched" do
+    assert watching? "foo.yrl"
+  end
+
   test "misc files are not watched" do
     refute watching? "foo.rb"
     refute watching? "foo.js"

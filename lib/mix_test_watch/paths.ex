@@ -3,7 +3,7 @@ defmodule MixTestWatch.Path do
   Decides if we should refresh for a path.
   """
 
-  @elixir_source_pattern ~r/\.(erl|ex|exs|eex)\z/i
+  @elixir_source_pattern ~r/\.(erl|ex|exs|eex|xrl|yrl)\z/i
 
   @ignored_dirs ~w(
     deps/

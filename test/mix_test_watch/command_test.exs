@@ -6,6 +6,16 @@ defmodule MixTestWatch.CommandTest do
 
   alias MixTestWatch.Command
 
+  test "build appends commandline arguments" do
+    args = "test/mix_test_watch/command_test.exs:15"
+    expected = ~s(sh -c "MIX_ENV=test mix do run -e )
+            <> "'Application.put_env(:elixir, :ansi_enabled, true);'"
+            <> ~s(, test test/mix_test_watch/command_test.exs:15")
+    TemporaryEnv.delete :mix_test_watch, :tasks do
+      assert Command.build(args) == expected
+    end
+  end
+
   test "build returns a sensible default command" do
     expected = ~s(sh -c "MIX_ENV=test mix do run -e )
             <> "'Application.put_env(:elixir, :ansi_enabled, true);'"

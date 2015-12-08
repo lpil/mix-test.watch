@@ -11,10 +11,10 @@ defmodule MixTestWatch.Command do
   @doc """
   Builds the shell command that runs the desired mix task(s).
   """
-  def build do
+  def build(args \\ nil) do
     command =
       tasks
-      |> Enum.map(&task_command/1)
+      |> Enum.map(&task_command(&1, args))
       |> Enum.join(" && ")
     ~s(sh -c "#{command}")
   end
@@ -40,8 +40,10 @@ defmodule MixTestWatch.Command do
     Application.get_env(:mix_test_watch, :prefix, @default_prefix)
   end
 
-  defp task_command(task) do
-    ~s(MIX_ENV=test #{prefix} do #{ansi}, #{task})
+  defp task_command(task, args) do
+    ["MIX_ENV=test", prefix, "do", ansi <> ",", task, args]
+    |> Enum.filter(&(&1))
+    |> Enum.join(" ")
   end
 
 

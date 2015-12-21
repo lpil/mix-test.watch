@@ -17,7 +17,7 @@ defmodule Mix.Tasks.Test.Watch do
     args     = Enum.join(args, " ")
     :ok      = Application.start :fs, :permanent
     {:ok, _} = GenServer.start_link( __MODULE__, args, name: __MODULE__ )
-    run_tests
+    run_tests(args)
     :timer.sleep :infinity
   end
 
@@ -46,9 +46,9 @@ defmodule Mix.Tasks.Test.Watch do
 
   @spec run_tests(String.t) :: :ok
 
-  defp run_tests(_args \\ "") do
+  defp run_tests(args) do
     IO.puts "\nRunning tests..."
-    :ok = M.Command.build |> M.Command.exec
+    :ok = args |> M.Command.build |> M.Command.exec
     flush
     :ok
   end

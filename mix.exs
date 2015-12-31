@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Test.Watch.Mixfile do
   use Mix.Project
 
-  @version "0.2.4"
+  @version "0.2.5"
 
   def project do
     [
@@ -14,7 +14,7 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
       name: "mix test.watch",
       description: "Automatically run tests when files change",
       package: [
-        contributors: ["Louis Pilfold"],
+        maintainers: ["Louis Pilfold"],
         licenses: ["MIT"],
         links: %{"GitHub" => "https://github.com/lpil/mix-test.watch"},
         files: ~w(LICENCE README.md lib mix.exs),

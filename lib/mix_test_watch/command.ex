@@ -5,6 +5,7 @@ defmodule MixTestWatch.Command do
 
   @default_tasks ~w(test)a
   @default_prefix "mix"
+  @mix_env System.get_env("MIX_ENV") || "test"
 
   @spec build :: String.t
 
@@ -41,7 +42,7 @@ defmodule MixTestWatch.Command do
   end
 
   defp task_command(task, args) do
-    ["MIX_ENV=test", prefix, "do", ansi <> ",", task, args]
+    ["MIX_ENV=#{@mix_env}", prefix, "do", ansi <> ",", task, args]
     |> Enum.filter(&(&1))
     |> Enum.join(" ")
   end

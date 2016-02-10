@@ -7,6 +7,8 @@ mix test.watch
 [![Hex downloads](https://img.shields.io/hexpm/dt/mix_test_watch.svg "Hex downloads")](https://hex.pm/packages/mix_test_watch)
 
 Automatically run your Elixir project's tests each time you save a file.
+Because TDD is awesome.
+
 
 ## Usage
 
@@ -27,16 +29,52 @@ mix test.watch
 
 Start hacking :)
 
+
 ## Running Additional Mix Tasks
 
-Coming soon.
+Through the mix config it is possible to run other mix tasks as well as the
+test task. For example, if I wished to run the [Dogma][dogma] code style
+linter after my tests I would do so like this.
 
-## Notes
+[dogma]: https://github.com/lpil/dogma
+
+```elixir
+use Mix.Config
+
+config :mix_test_watch,
+  tasks: [
+    "test",
+    "dogma",
+  ]
+```
+
+Tasks are run in the order they appear in the list, and the progression will
+stop if any command returns a non-zero exit code.
+
+All tasks are run with `MIX_ENV` set to `test`.
+
+
+## Passing Arguments To Tasks
+
+Any command line arguments passed to the `test.watch` task will be passed
+through to the tasks being run. If I only want to run the tests from one file
+every time I save a file I could do so with this command:
+
+```
+mix test.watch test/file/to_test.exs
+```
+
+Note that if you have configured more than one task to be run these arguments
+will be passed to all the tasks run, not just the test command.
+
+
+## Compatibility Notes
 
 On Linux you may need to install `inotify-tools`.
 
 On Windows I've no idea. If anyone knows how to use Windows and would like to
 help, please get in touch.
+
 
 ## Licence
 

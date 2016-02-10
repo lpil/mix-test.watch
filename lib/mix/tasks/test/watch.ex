@@ -3,8 +3,9 @@ defmodule Mix.Tasks.Test.Watch do
   use GenServer
 
   alias MixTestWatch.Command
-  alias MixTestWatch.Shell
+  alias MixTestWatch.Message
   alias MixTestWatch.Path, as: MPath
+  alias MixTestWatch.Shell
 
   @shortdoc """
   Automatically run tests on file changes
@@ -51,16 +52,7 @@ defmodule Mix.Tasks.Test.Watch do
   defp run_tests(args) do
     IO.puts "\nRunning tests..."
     :ok = args |> Command.build |> Shell.exec
-    flush
+    Message.flush
     :ok
-  end
-
-  @spec flush :: :ok
-
-  defp flush do
-    receive do
-      _       -> flush
-      after 0 -> :ok
-    end
   end
 end

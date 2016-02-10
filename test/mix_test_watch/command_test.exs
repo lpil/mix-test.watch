@@ -35,13 +35,12 @@ defmodule MixTestWatch.CommandTest do
 
   test "build can take command prefixes from application env" do
     prefix = ["iex -S mix"]
-    expected = ~s(sh -c "MIX_ENV=test iex -S mix do run -e )
-            <> "'Application.put_env(:elixir, :ansi_enabled, true);'"
-            <> ~s(, test && MIX_ENV=test iex -S mix do run -e )
-            <> "'Application.put_env(:elixir, :ansi_enabled, true);'"
-            <> ~s(, dogma")
-    TemporaryEnv.set :mix_test_watch, prefix: prefix do
-      assert Command.build == expected
+    expected = ~s[sh -c "MIX_ENV=test iex -S mix do run -e ]
+            <> ~s['Application.put_env(:elixir, :ansi_enabled, true);', test"]
+    TemporaryEnv.delete :mix_test_watch, :tasks do
+        TemporaryEnv.set :mix_test_watch, prefix: prefix do
+          assert Command.build == expected
+        end
     end
   end
 end

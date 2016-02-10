@@ -2,8 +2,6 @@ defmodule MixTestWatch.CommandTest do
   use ExUnit.Case, async: false
   use TemporaryEnv
 
-  import ExUnit.CaptureIO
-
   alias MixTestWatch.Command
 
   test "build appends commandline arguments" do
@@ -45,12 +43,5 @@ defmodule MixTestWatch.CommandTest do
     TemporaryEnv.set :mix_test_watch, prefix: prefix do
       assert Command.build == expected
     end
-  end
-
-  test "exec runs a given command, streaming to STDOUT" do
-    printed = capture_io fn->
-      Command.exec "echo Hello, world!"
-    end
-    assert printed == "Hello, world!\n"
   end
 end

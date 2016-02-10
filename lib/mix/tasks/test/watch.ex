@@ -2,7 +2,9 @@ defmodule Mix.Tasks.Test.Watch do
   use Mix.Task
   use GenServer
 
-  alias MixTestWatch, as: M
+  alias MixTestWatch.Command
+  alias MixTestWatch.Shell
+  alias MixTestWatch.Path, as: MPath
 
   @shortdoc """
   Automatically run tests on file changes
@@ -37,7 +39,7 @@ defmodule Mix.Tasks.Test.Watch do
   @spec handle_info({pid, fs_event, fs_details}, %{}) :: {:noreply, %{}}
 
   def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
-    if M.Path.watching?( to_string path ) do
+    if MPath.watching?( to_string path ) do
       run_tests( state.args )
     end
     {:noreply, state}
@@ -48,7 +50,7 @@ defmodule Mix.Tasks.Test.Watch do
 
   defp run_tests(args) do
     IO.puts "\nRunning tests..."
-    :ok = args |> M.Command.build |> M.Command.exec
+    :ok = args |> Command.build |> Shell.exec
     flush
     :ok
   end

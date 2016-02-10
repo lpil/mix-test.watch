@@ -80,7 +80,7 @@ help, please get in touch.
 
 ```
 mix test.watch
-Copyright © 2015 Louis Pilfold
+Copyright © 2015-present Louis Pilfold
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),

@@ -33,9 +33,9 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
       # File system event watcher
       {:fs, "~> 0.9.1"},
       # Style linter
-      {:dogma, only: ~w(dev test)a},
+      {:dogma, "~> 0.1", only: ~w(dev test)a},
       # App env state test helper
-      {:temporary_env, only: :test},
+      {:temporary_env, "~> 1.0", only: :test},
     ]
   end
 end

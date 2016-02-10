@@ -1,8 +1,8 @@
-%{"dogma": {:hex, :dogma, "0.0.10"},
+%{"dogma": {:hex, :dogma, "0.1.0"},
   "fs": {:hex, :fs, "0.9.2"},
   "meck": {:hex, :meck, "0.8.2"},
   "mock": {:hex, :mock, "0.1.0"},
-  "poison": {:hex, :poison, "1.5.0"},
+  "poison": {:hex, :poison, "1.5.2"},
   "porcelain": {:hex, :porcelain, "2.0.0"},
   "shouldi": {:hex, :shouldi, "0.2.2"},
   "temporary_env": {:hex, :temporary_env, "1.0.1"}}

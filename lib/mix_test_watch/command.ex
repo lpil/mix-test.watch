@@ -3,33 +3,24 @@ defmodule MixTestWatch.Command do
   Responsible for forming our shell commands.
   """
 
-  @default_tasks ~w(test)a
-  @default_prefix "mix"
+  alias MixTestWatch.Config
 
-  @spec build :: String.t
+  @spec build(%Config{}) :: String.t
 
   @doc """
   Builds the shell command that runs the desired mix task(s).
   """
-  def build(args \\ nil) do
+  def build(config) do
     command =
-      tasks
-      |> Enum.map(&task_command(&1, args))
+      config.tasks
+      |> Enum.map(&task_command(&1, config))
       |> Enum.join(" && ")
     ~s(sh -c "#{command}")
   end
 
 
-  defp tasks do
-    Application.get_env(:mix_test_watch, :tasks, @default_tasks)
-  end
-
-  defp prefix do
-    Application.get_env(:mix_test_watch, :prefix, @default_prefix)
-  end
-
-  defp task_command(task, args) do
-    ["MIX_ENV=test", prefix, "do", ansi <> ",", task, args]
+  defp task_command(task, config) do
+    ["MIX_ENV=test", config.prefix, "do", ansi <> ",", task, config.cli_args]
     |> Enum.filter(&(&1))
     |> Enum.join(" ")
   end

@@ -6,6 +6,7 @@ defmodule Mix.Tasks.Test.Watch do
   alias MixTestWatch.Message
   alias MixTestWatch.Path, as: MPath
   alias MixTestWatch.Shell
+  alias MixTestWatch.Config
 
   @shortdoc """
   Automatically run tests on file changes
@@ -17,10 +18,10 @@ defmodule Mix.Tasks.Test.Watch do
   @spec run([String.t]) :: no_return
 
   def run(args) do
-    args     = Enum.join(args, " ")
+    config = Config.new(args)
     :ok      = Application.start :fs, :permanent
-    {:ok, _} = GenServer.start_link( __MODULE__, args, name: __MODULE__ )
-    run_tests(args)
+    {:ok, _} = GenServer.start_link( __MODULE__, config, name: __MODULE__ )
+    run_tests(config)
     :timer.sleep :infinity
   end
 
@@ -29,9 +30,9 @@ defmodule Mix.Tasks.Test.Watch do
 
   @spec init(String.t) :: {:ok, %{ args: String.t}}
 
-  def init(args) do
+  def init(config) do
     :ok = :fs.subscribe
-    {:ok, %{ args: args }}
+    {:ok, config}
   end
 
   @type fs_path    :: char_list
@@ -39,19 +40,19 @@ defmodule Mix.Tasks.Test.Watch do
   @type fs_details :: {fs_path, any}
   @spec handle_info({pid, fs_event, fs_details}, %{}) :: {:noreply, %{}}
 
-  def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
+  def handle_info({_pid, {:fs, :file_event}, {path, _event}}, config) do
     if MPath.watching?( to_string path ) do
-      run_tests( state.args )
+      run_tests( config )
     end
-    {:noreply, state}
+    {:noreply, config}
   end
 
 
   @spec run_tests(String.t) :: :ok
 
-  defp run_tests(args) do
+  defp run_tests(config) do
     IO.puts "\nRunning tests..."
-    :ok = args |> Command.build |> Shell.exec
+    :ok = config |> Command.build |> Shell.exec
     Message.flush
     :ok
   end

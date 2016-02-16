@@ -11,10 +11,15 @@ defmodule MixTestWatch.Run do
   @spec run(String.t, String.t) :: :ok
 
   def run(path, config) do
-    case run_single( path, config ) do
-      :ok      -> run_tests( config )   # single test found and successful
-      :no_test -> run_tests( config )   # single test not found
-      _        -> true                  # single test found but unsuccessful
+    path
+    |> Files.find_test
+    |> case do
+      :none       -> run_all(config)
+      {:ok, one } -> run_one(one, config)
+    end
+    |> case do
+      {:one, :ok} -> run_all(config)
+      {_, res}    -> res
     end
   end
 
@@ -24,29 +29,16 @@ defmodule MixTestWatch.Run do
     config |> Command.build |> Shell.exec
   end
 
-  @spec run_single(String.t, String.t) :: :ok
+  @spec run_one(String.t, String.t) :: :ok
 
-  defp run_single(path, config) do
-    if test_file?(path) do
-      run_tests %{config | cli_args: config.cli_args <> " " <> path}
-    else
-      case Files.find_test(path) do
-        nil   ->
-          Logger.info config, "\nIgnoring #{path}"
-          :no_test
-        found ->
-          run_single(found, config)
-      end
-    end
+  defp run_one(path, config) do
+    {:one, run_tests %{config | cli_args: config.cli_args <> " " <> path}}
   end
 
-  @spec test_file?(String.t) :: boolean
+  @spec run_all(String.t) :: :ok
 
-  defp test_file?(path) do
-    pwd = Path.absname("./")
-    path
-      |> Path.relative_to(pwd)
-      |> String.starts_with?("test/")
+  def run_all(config) do
+    {:all, run_tests(config) }
   end
 
 end

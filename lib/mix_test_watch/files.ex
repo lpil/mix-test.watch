@@ -11,9 +11,9 @@ defmodule MixTestWatch.Files do
       |> String.replace("lib/", "test/")
       |> String.replace(~r/\.ex$/, "_test.exs")
     if File.exists?(candidate) do
-      candidate
+      {:ok, candidate }
     else
-      nil
+      :none
     end
   end
 end

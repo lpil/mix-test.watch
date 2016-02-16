@@ -12,19 +12,19 @@ defmodule MixTestWatch.FilesTest do
   @this_file Path.relative_to(__ENV__.file, System.cwd)
 
   test "test files are responsible for themselved" do
-    assert @this_file == find_test(@this_file)
+    assert {:ok, @this_file} == find_test(@this_file)
   end
 
   test "finds test file for implementation in lib/" do
-    assert @this_file == find_test("lib/mix_test_watch/files.ex")
+    assert {:ok, @this_file} == find_test("lib/mix_test_watch/files.ex")
   end
 
   test "finds test file for implementation in web/ (for phoenix)" do
-    assert @this_file == find_test("web/mix_test_watch/files.ex")
+    assert {:ok, @this_file} == find_test("web/mix_test_watch/files.ex")
   end
 
   test "finds nothing when test file does not exist" do
-    assert nil == find_test("lib/mix_test_watch/rummelpummel.ex")
+    assert :none == find_test("lib/mix_test_watch/rummelpummel.ex")
   end
 
 end

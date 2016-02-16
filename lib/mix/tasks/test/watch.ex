@@ -21,7 +21,7 @@ defmodule Mix.Tasks.Test.Watch do
     config = Config.new(args)
     :ok      = Application.start :fs, :permanent
     {:ok, _} = GenServer.start_link( __MODULE__, config, name: __MODULE__ )
-    Run.run_tests(config)
+    Run.run_all(config)
     :timer.sleep :infinity
   end
 

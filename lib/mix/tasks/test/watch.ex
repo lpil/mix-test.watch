@@ -6,6 +6,7 @@ defmodule Mix.Tasks.Test.Watch do
   alias MixTestWatch.Shell
   alias MixTestWatch.Config
   alias MixTestWatch.Run
+  alias MixTestWatch.Message
 
   @shortdoc """
   Automatically run tests on file changes
@@ -43,19 +44,9 @@ defmodule Mix.Tasks.Test.Watch do
     path = to_string path
     if MPath.watching?(path) do
       Run.run(path, config)
-      flush
+      Message.flush
     end
     {:noreply, config}
-  end
-
-
-  @spec flush :: :ok
-
-  defp flush do
-    receive do
-      _       -> flush
-      after 0 -> :ok
-    end
   end
 
 end

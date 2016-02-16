@@ -8,6 +8,7 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
       app: :mix_test_watch,
       version: @version,
       elixir: "~> 1.0",
+      elixirc_paths: elixirc_paths(Mix.env),
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps,
@@ -27,6 +28,10 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
       applications: []
     ]
   end
+
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   defp deps do
     [

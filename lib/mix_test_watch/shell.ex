@@ -10,8 +10,13 @@ defmodule MixTestWatch.Shell do
   """
   def exec(exe) do
     args = ~w(stream binary exit_status use_stdio stderr_to_stdout)a
-    {:spawn, exe} |> Port.open(args) |> results_loop
-    :ok
+    {:spawn, exe}
+    |> Port.open(args)
+    |> results_loop
+    |> case do
+      0 -> :ok
+      _ -> :error
+    end
   end
 
 

@@ -6,6 +6,7 @@ defmodule MixTestWatch.Run do
   alias MixTestWatch.Command
   alias MixTestWatch.Files
   alias MixTestWatch.Shell
+  alias MixTestWatch.Logger
 
   @spec run(String.t, String.t) :: :ok
 
@@ -31,7 +32,7 @@ defmodule MixTestWatch.Run do
     else
       case Files.find_test(path) do
         nil   ->
-          IO.puts "\nIgnoring #{path}"
+          Logger.info config, "\nIgnoring #{path}"
           :no_test
         found ->
           run_single(found, config)

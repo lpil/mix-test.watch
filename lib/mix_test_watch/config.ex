@@ -8,7 +8,8 @@ defmodule MixTestWatch.Config do
 
   defstruct tasks:    @default_tasks,
             prefix:   @default_prefix,
-            cli_args: ""
+            cli_args: "",
+            quiet:    Mix.env == :dev
 
 
   @spec new([String.t]) :: %__MODULE__{}

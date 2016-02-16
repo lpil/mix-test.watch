@@ -5,6 +5,7 @@ defmodule Mix.Tasks.Test.Watch do
   alias MixTestWatch.Path, as: MPath
   alias MixTestWatch.Shell
   alias MixTestWatch.Config
+  alias MixTestWatch.Run
 
   @shortdoc """
   Automatically run tests on file changes
@@ -19,7 +20,7 @@ defmodule Mix.Tasks.Test.Watch do
     config = Config.new(args)
     :ok      = Application.start :fs, :permanent
     {:ok, _} = GenServer.start_link( __MODULE__, config, name: __MODULE__ )
-    M.Run.run_all(config)
+    Run.run_all(config)
     :timer.sleep :infinity
   end
 
@@ -41,7 +42,7 @@ defmodule Mix.Tasks.Test.Watch do
   def handle_info({_pid, {:fs, :file_event}, {path, _event}}, config) do
     path = to_string path
     if MPath.watching?(path) do
-      M.Run.run(path, config)
+      Run.run(path, config)
       flush
     end
     {:noreply, config}

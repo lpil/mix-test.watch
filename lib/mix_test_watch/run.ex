@@ -6,7 +6,6 @@ defmodule MixTestWatch.Run do
   alias MixTestWatch.Command
   alias MixTestWatch.Files
   alias MixTestWatch.Shell
-  alias MixTestWatch.Logger
 
   @spec run(String.t, String.t) :: :ok
 

@@ -27,7 +27,7 @@ defmodule MixTestWatch.Run do
 
   defp run_single(path, config) do
     if test_file?(path) do
-      run_tests config.args <> " " <> path
+      run_tests %{config | cli_args: config.cli_args <> " " <> path}
     else
       case Files.find_test(path) do
         nil   ->

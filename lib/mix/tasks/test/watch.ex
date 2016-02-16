@@ -3,6 +3,7 @@ defmodule Mix.Tasks.Test.Watch do
   use GenServer
 
   alias MixTestWatch.Path, as: MPath
+  alias MixTestWatch.Shell
   alias MixTestWatch.Config
 
   @shortdoc """

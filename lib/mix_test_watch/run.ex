@@ -42,7 +42,7 @@ defmodule MixTestWatch.Run do
   @spec test_file?(String.t) :: boolean
 
   defp test_file?(path) do
-    pwd    = Path.absname("./")
+    pwd = Path.absname("./")
     path
       |> Path.relative_to(pwd)
       |> String.starts_with?("test/")

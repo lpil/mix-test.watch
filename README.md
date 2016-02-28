@@ -68,10 +68,10 @@ Note that if you have configured more than one task to be run these arguments
 will be passed to all the tasks run, not just the test command.
 
 
-## Clearing the console before each run
+## Clearing The Console Before Each Run
 
-If you want mix test.watch to clear the console before each run, you can enable 
-this option in your config/dev.exs as follows:
+If you want mix test.watch to clear the console before each run, you can
+enable this option in your config/dev.exs as follows:
 
 ```elixir
 config :mix_test_watch,

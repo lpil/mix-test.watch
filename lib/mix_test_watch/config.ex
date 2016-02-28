@@ -5,9 +5,11 @@ defmodule MixTestWatch.Config do
 
   @default_tasks ~w(test)
   @default_prefix "mix"
+  @default_clear false
 
   defstruct tasks:    @default_tasks,
             prefix:   @default_prefix,
+            clear:    @default_clear,
             cli_args: ""
 
 
@@ -20,6 +22,7 @@ defmodule MixTestWatch.Config do
     %__MODULE__{
       tasks:    get_tasks(),
       prefix:   get_prefix(),
+      clear:    get_clear(),
       cli_args: args,
     }
   end
@@ -31,5 +34,9 @@ defmodule MixTestWatch.Config do
 
   defp get_prefix do
     Application.get_env(:mix_test_watch, :prefix, @default_prefix)
+  end
+
+  defp get_clear do
+    Application.get_env(:mix_test_watch, :clear, @default_clear)
   end
 end

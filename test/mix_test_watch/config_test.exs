@@ -42,4 +42,12 @@ defmodule MixTestWatch.ConfigTest do
     config = Config.new
     assert config.cli_args == ""
   end
+
+  test "new/1 takes :clear from the env" do
+    TemporaryEnv.set :mix_test_watch, clear: true do
+      config = Config.new
+      assert config.clear
+    end
+  end
+
 end

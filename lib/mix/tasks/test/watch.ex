@@ -51,9 +51,14 @@ defmodule Mix.Tasks.Test.Watch do
   @spec run_tests(String.t) :: :ok
 
   defp run_tests(config) do
+    maybe_clear(config)
     IO.puts "\nRunning tests..."
     :ok = config |> Command.build |> Shell.exec
     Message.flush
     :ok
   end
+
+  defp maybe_clear(%{clear: false}), do: nil
+  defp maybe_clear(%{clear: true}), do: IO.puts IO.ANSI.clear
+
 end

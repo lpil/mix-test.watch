@@ -5,6 +5,7 @@ mix test.watch
 [![Build Status](https://travis-ci.org/lpil/mix-test.watch.svg?branch=master)](https://travis-ci.org/lpil/mix-test.watch)
 [![Hex version](https://img.shields.io/hexpm/v/mix_test_watch.svg "Hex version")](https://hex.pm/packages/mix_test_watch)
 [![Hex downloads](https://img.shields.io/hexpm/dt/mix_test_watch.svg "Hex downloads")](https://hex.pm/packages/mix_test_watch)
+[![Deps Status](https://beta.hexfaktor.org/badge/all/github/lpil/mix-test.watch.svg)](https://beta.hexfaktor.org/github/lpil/mix-test.watch)
 
 Automatically run your Elixir project's tests each time you save a file.
 Because TDD is awesome.

@@ -26,9 +26,16 @@ defmodule MixTestWatch.ConfigTest do
   end
 
   test "new/1 takes :exclude from the env" do
+    TemporaryEnv.set :mix_test_watch, exclude: [~r/migration_.*/] do
+      config = Config.new
+      assert config.exclude == [~r/migration_.*/]
+    end
+  end
+
+  test ":exclude can accept list of strings and transforms it to regexp" do
     TemporaryEnv.set :mix_test_watch, exclude: ["migration_.*"] do
       config = Config.new
-      assert config.exclude == ["migration_.*"]
+      assert config.exclude == [~r/migration_.*/]
     end
   end
 

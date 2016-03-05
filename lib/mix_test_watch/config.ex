@@ -44,6 +44,15 @@ defmodule MixTestWatch.Config do
   end
 
   defp get_excluded do
-    Application.get_env(:mix_test_watch, :exclude, @default_exclude)
+    exclude = Application.get_env(:mix_test_watch, :exclude, @default_exclude)
+    exclude
+    |> Enum.map(fn mask ->
+      if Regex.regex?(mask) do
+        mask
+      else
+        Regex.compile!(mask)
+      end
+    end)
   end
+
 end

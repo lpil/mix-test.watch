@@ -16,6 +16,14 @@ defmodule MixTestWatch.Path do
     watched_directory?( path ) && elixir_extension?( path )
   end
 
+  @spec excluded?(MixTestWatch.Config.t, String.t) :: boolean
+
+  def excluded?(config, path) do
+    config.exclude
+    |> Enum.map(fn pattern -> Regex.match?(pattern, path)  end)
+    |> Enum.any?()
+  end
+
 
   defp watched_directory?(path) do
     not String.starts_with?( path, @ignored_dirs )

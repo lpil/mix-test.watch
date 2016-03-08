@@ -81,16 +81,16 @@ config :mix_test_watch,
 
 ## Excluding files or directories
 
-To ignore changes from specific files or directories just add `exclude:` patterns
-to your config in `mix.exs`:
+To ignore changes from specific files or directories just add `exclude:` regexp
+patterns to your config in `mix.exs`:
 
 ```elixir
 config :mix_test_watch,
-  exclude: ["db_migration/.*", "useless_.*\.exs"]
+  exclude: [
+            ~r/db_migration\/.*/,
+            ~r/useless_.*\.exs/
+           ]
 ```
-
-It accepts either regexp struct `~r/\w+/` or pattern as string `"\w+"` which
-will be automatically compiled to regexp.
 
 ## Compatibility Notes
 

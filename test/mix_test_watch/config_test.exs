@@ -32,13 +32,6 @@ defmodule MixTestWatch.ConfigTest do
     end
   end
 
-  test ":exclude can accept list of strings and transforms it to regexp" do
-    TemporaryEnv.set :mix_test_watch, exclude: ["migration_.*"] do
-      config = Config.new
-      assert config.exclude == [~r/migration_.*/]
-    end
-  end
-
   test ~s(new/1 defaults :prefix to "mix") do
     TemporaryEnv.delete :mix_test_watch, :prefix do
       config = Config.new

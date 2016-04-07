@@ -4,6 +4,11 @@ defmodule MixTestWatch.Environment do
   """
 
   if match? {:win32, _}, :os.type do
+    @spec windows? :: boolean
+    @doc """
+    Returns true if we're on windows
+    """
+    def windows?, do: true
 
     @spec shell_launch(String.t) :: String.t
 
@@ -29,6 +34,11 @@ defmodule MixTestWatch.Environment do
       if chained == :chained, do: cmd <> " &&", else: cmd
     end
   else
+    @spec windows? :: boolean
+    @doc """
+    Returns true if we're on windows
+    """
+    def windows?, do: false
 
     @spec shell_launch(String.t) :: String.t
 

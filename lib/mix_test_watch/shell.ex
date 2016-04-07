@@ -9,7 +9,7 @@ defmodule MixTestWatch.Shell do
   Runs a given shell command, steaming the output to STDOUT
   """
   def exec(exe) do
-    args = ~w(stream binary exit_status use_stdio stderr_to_stdout)a
+    args = ~w(stream binary exit_status use_stdio hide stderr_to_stdout)a
     {:spawn, exe} |> Port.open(args) |> results_loop
     :ok
   end

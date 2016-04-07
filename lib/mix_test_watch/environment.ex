@@ -19,7 +19,7 @@ defmodule MixTestWatch.Environment do
     """
     def escaped_quote(content), do: "^\"#{content}^\""
 
-    @spec set_var(String.t, String.t) :: String.t
+    @spec set_var(String.t, String.t, String.t) :: String.t
 
     @doc """
     Builds environment variable set command for the shell
@@ -44,7 +44,7 @@ defmodule MixTestWatch.Environment do
     """
     def escaped_quote(content), do: "'#{content}'"
 
-    @spec set_var(String.t, String.t) :: String.t
+    @spec set_var(String.t, String.t, String.t) :: String.t
 
     @doc """
     Builds environment variable set command for the shell

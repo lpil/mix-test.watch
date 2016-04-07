@@ -20,7 +20,8 @@ defmodule MixTestWatch.Command do
 
 
   defp task_command(task, config) do
-    [Env.set_var("MIX_ENV", "test", :chained), config.prefix, "do", ansi <> ",", task, config.cli_args]
+    set_var = Env.set_var("MIX_ENV", "test", :chained)
+    [set_var, config.prefix, "do", ansi <> ",", task, config.cli_args]
     |> Enum.filter(&(&1))
     |> Enum.join(" ")
   end
@@ -28,7 +29,8 @@ defmodule MixTestWatch.Command do
 
   @spec ansi :: String.t
   defp ansi do
-    put_env = Env.escaped_quote("Application.put_env(:elixir, :ansi_enabled, true);")
+    put_env =
+      Env.escaped_quote("Application.put_env(:elixir, :ansi_enabled, true);")
     "run -e " <> put_env
   end
 end

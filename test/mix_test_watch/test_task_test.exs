@@ -4,14 +4,24 @@ defmodule MixTestWatch.TestTaskTest do
   import ExUnit.CaptureIO
 
   test "the test task can be run multiple times" do
-    args = ["test/mix_test_watch/test_task_helper_test.exs"]
     Agent.start(fn-> 0 end, name: __MODULE__)
     silence(fn->
-      TestTask.run(args)
-      TestTask.run(args)
+      run_helper_test()
+      run_helper_test()
     end)
     times_run = Agent.get(__MODULE__, fn x -> x end)
     assert times_run == 2
+  end
+
+  test "elixir config does not grow continuously" do
+    assert :elixir_config.get(:at_exit) == []
+    silence(fn-> run_helper_test end)
+    assert :elixir_config.get(:at_exit) == []
+  end
+
+  defp run_helper_test do
+    ["test/mix_test_watch/test_task_helper_test.exs"]
+    |> TestTask.run
   end
 
   defp silence(fun) do

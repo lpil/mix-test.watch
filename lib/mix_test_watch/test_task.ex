@@ -15,11 +15,10 @@ defmodule MixTestWatch.TestTask do
   end
 
   defp unload_test_files do
-    test_files =
-      test_paths
-      |> Mix.Utils.extract_files("*")
-      |> Enum.map(&Path.expand/1)
-    :elixir_code_server.cast({:unload_files, test_files})
+    test_paths
+    |> Mix.Utils.extract_files("*")
+    |> Enum.map(&Path.expand/1)
+    |> Code.unload_files
   end
 
   defp reenable_dependancy_tasks do

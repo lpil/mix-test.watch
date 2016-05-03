@@ -1,3 +1,6 @@
+#
+# Do you know how we could test this task? If so, get in touch :)
+#
 defmodule MixTestWatch.CompileTask do
   @moduledoc """
   Run the compile task, even if it has been run before.

@@ -42,7 +42,8 @@ defmodule Mix.Tasks.Test.Watch do
   @spec handle_info({pid, fs_event, fs_details}, %{}) :: {:noreply, %{}}
 
   def handle_info({_pid, {:fs, :file_event}, {path, _event}}, config) do
-    if MPath.watching?(to_string path) and not MPath.excluded?(config, path) do
+    path = to_string(path)
+    if MPath.watching?(path) and not MPath.excluded?(config, path) do
       run_tests( config )
     end
     {:noreply, config}

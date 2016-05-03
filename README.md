@@ -79,6 +79,19 @@ config :mix_test_watch,
   clear: true
 ```
 
+## Excluding files or directories
+
+To ignore changes from specific files or directories just add `exclude:` regexp
+patterns to your config in `mix.exs`:
+
+```elixir
+config :mix_test_watch,
+  exclude: [
+            ~r/db_migration\/.*/,
+            ~r/useless_.*\.exs/
+           ]
+```
+
 ## Compatibility Notes
 
 On Linux you may need to install `inotify-tools`.

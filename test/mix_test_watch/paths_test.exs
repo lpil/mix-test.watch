@@ -1,7 +1,7 @@
 defmodule MixTestWatch.PathTest do
   use ExUnit.Case
 
-  import MixTestWatch.Path, only: [watching?: 1]
+  import MixTestWatch.Path, only: [watching?: 1, excluded?: 2]
 
   test ".ex files are watched" do
     assert watching? "foo.ex"
@@ -48,4 +48,13 @@ defmodule MixTestWatch.PathTest do
     refute watching? "deps/dogma/lib/dogma.exs"
     refute watching? "deps/dogma/lib/dogma.eex"
   end
+
+  test "migrations_.* files should be excluded watched" do
+    assert excluded? %{exclude: [~r/migrations_.*/]}, "migrations_files/foo.exs"
+  end
+
+  test "app.ex is not excluded by migrations_.* pattern" do
+    refute excluded? %{exclude: [~r/migrations_.*/]}, "app.ex"
+  end
+
 end

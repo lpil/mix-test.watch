@@ -18,11 +18,17 @@ defmodule MixTestWatch.ConfigTest do
     end
   end
 
-
   test "new/1 takes :prefix from the env" do
     TemporaryEnv.set :mix_test_watch, prefix: :env_prefix do
       config = Config.new
       assert config.prefix == :env_prefix
+    end
+  end
+
+  test "new/1 takes :exclude from the env" do
+    TemporaryEnv.set :mix_test_watch, exclude: [~r/migration_.*/] do
+      config = Config.new
+      assert config.exclude == [~r/migration_.*/]
     end
   end
 

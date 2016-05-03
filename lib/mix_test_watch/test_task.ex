@@ -4,6 +4,7 @@ defmodule MixTestWatch.TestTask do
   """
   def run(args) do
     Mix.env(:test)
+    Code.compiler_options(ignore_module_conflict: true)
     unload_test_files()
     reenable_dependancy_tasks()
     Mix.Task.run("test", args)

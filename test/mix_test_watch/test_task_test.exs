@@ -3,8 +3,12 @@ defmodule MixTestWatch.TestTaskTest do
   alias MixTestWatch.TestTask
   import ExUnit.CaptureIO
 
-  test "the test task can be run multiple times" do
+  setup do
     Agent.start(fn-> 0 end, name: __MODULE__)
+    on_exit(fn-> Agent.stop(__MODULE__) end)
+  end
+
+  test "the test task can be run multiple times" do
     silence(fn->
       run_helper_test()
       run_helper_test()

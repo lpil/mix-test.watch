@@ -4,12 +4,10 @@ defmodule MixTestWatch.Config do
   """
 
   @default_tasks ~w(test)
-  @default_prefix "mix"
   @default_clear false
   @default_exclude []
 
   defstruct tasks:    @default_tasks,
-            prefix:   @default_prefix,
             clear:    @default_clear,
             exclude:  @default_exclude,
             cli_args: ""
@@ -20,23 +18,17 @@ defmodule MixTestWatch.Config do
   Create a new config struct, taking values from the ENV
   """
   def new(cli_args \\ []) do
-    args = Enum.join(cli_args, " ")
     %__MODULE__{
       tasks:    get_tasks(),
-      prefix:   get_prefix(),
       clear:    get_clear(),
       exclude:  get_excluded(),
-      cli_args: args,
+      cli_args: cli_args,
     }
   end
 
 
   defp get_tasks do
     Application.get_env(:mix_test_watch, :tasks, @default_tasks)
-  end
-
-  defp get_prefix do
-    Application.get_env(:mix_test_watch, :prefix, @default_prefix)
   end
 
   defp get_clear do
@@ -46,5 +38,4 @@ defmodule MixTestWatch.Config do
   defp get_excluded do
     Application.get_env(:mix_test_watch, :exclude, @default_exclude)
   end
-
 end

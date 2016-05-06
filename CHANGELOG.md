@@ -1,6 +1,19 @@
 Changelog
 =========
 
+## Unreleased
+
+- The existing VM is now reused for running the tests.
+- Windows support thanks to VM reuse.
+- Speed improvements thanks to VM reuse.
+- Paths can be ignored by watcher (Alex Myasoedov @msoedov)
+- Ability to specify shell command removed.
+
+## v0.2.6 - 2016.02.28
+
+- The terminal can now be cleared between test runs.
+  (Gerard de Brieder @smeevil)
+
 ## v0.2.5 - 2015.12.31
 
 - It is now possible to run addition tasks using mix config.

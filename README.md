@@ -96,9 +96,6 @@ config :mix_test_watch,
 
 On Linux you may need to install `inotify-tools`.
 
-On Windows I've no idea. If anyone knows how to use Windows and would like to
-help, please get in touch.
-
 
 ## Licence
 

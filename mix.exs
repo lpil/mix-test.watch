@@ -24,7 +24,8 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
 
   def application do
     [
-      applications: []
+      mod: {MixTestWatch, []},
+      applications: [:fs]
     ]
   end
 

@@ -11,7 +11,8 @@ defmodule MixTestWatch do
 
 
   def run(args \\ []) when is_list(args) do
-    _ = args # TODO: Inject config
+    Mix.env :test
+    put_config(args)
     :ok = Application.ensure_started(:fs)
     :ok = Application.ensure_started(:mix_test_watch)
     Watcher.run_tasks
@@ -27,6 +28,11 @@ defmodule MixTestWatch do
     Supervisor.start_link(children, opts)
   end
 
+
+  defp put_config(args) do
+    config = MixTestWatch.Config.new(args)
+    Application.put_env(:mix_test_watch, :__config__, config, persistent: true)
+  end
 
   defp no_halt_unless_in_repl do
     unless Code.ensure_loaded?(IEx) && IEx.started? do

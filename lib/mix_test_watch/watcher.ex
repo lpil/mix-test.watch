@@ -14,12 +14,12 @@ defmodule MixTestWatch.Watcher do
 
   # Client API
 
-  def start(%Config{} = config) do
-    GenServer.start(__MODULE__, config, name: __MODULE__)
+  def start do
+    GenServer.start(__MODULE__, [], name: __MODULE__)
   end
 
-  def start_link(%Config{} = config \\ %Config{}) do
-    GenServer.start_link(__MODULE__, config, name: __MODULE__)
+  def start_link do
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def run_tasks do
@@ -31,42 +31,50 @@ defmodule MixTestWatch.Watcher do
 
   @spec init(String.t) :: {:ok, %{ args: String.t}}
 
-  def init(config) do
+  def init(_) do
     :ok = :fs.subscribe
-    {:ok, config}
+    {:ok, []}
   end
 
-  def handle_cast(:run_tasks, config) do
-    run_tasks(config)
-    {:noreply, config}
+  def handle_cast(:run_tasks, state) do
+    config = get_config()
+    do_run_tasks(config)
+    {:noreply, state}
   end
 
-  def handle_info({_pid, {:fs, :file_event}, {path, _event}}, config) do
-    path = to_string(path)
+  def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
+    config = get_config()
+    path   = to_string(path)
     if MPath.watching?(path) and not MPath.excluded?(config, path) do
-      run_tasks( config )
+      do_run_tasks( config )
     end
-    {:noreply, config}
+    {:noreply, state}
   end
 
 
   # Internal functions
 
-  @spec run_tasks(String.t) :: :ok
+  @spec get_config() :: %Config{}
 
-  defp run_tasks(config) do
+  defp get_config do
+    Application.get_env(:mix_test_watch, :__config__, %Config{})
+  end
+
+  @spec do_run_tasks(String.t) :: :ok
+
+  defp do_run_tasks(config) do
     maybe_clear(config)
     IO.puts "\nRunning tests..."
     CompileTask.run
-    config.tasks |> Enum.each(&run_task(&1, config.cli_args))
+    config.tasks |> Enum.each(&do_run_task(&1, config.cli_args))
     Message.flush
     :ok
   end
 
-  defp run_task("test", args) do
+  defp do_run_task("test", args) do
     TestTask.run(args)
   end
-  defp run_task(task, args) do
+  defp do_run_task(task, args) do
     GenTask.run(task, args)
   end
 

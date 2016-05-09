@@ -12,7 +12,8 @@ defmodule MixTestWatch do
 
   def run(args \\ []) when is_list(args) do
     _ = args # TODO: Inject config
-    Application.ensure_started(__MODULE__)
+    :ok = Application.ensure_started(:fs)
+    :ok = Application.ensure_started(:mix_test_watch)
     Watcher.run_tasks
     no_halt_unless_in_repl()
   end

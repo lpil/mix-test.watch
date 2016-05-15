@@ -69,5 +69,5 @@ defmodule Mix.Tasks.Test.Watch do
   end
 
   defp maybe_clear(%{clear: false}), do: nil
-  defp maybe_clear(%{clear: true}), do: IO.puts IO.ANSI.clear
+  defp maybe_clear(%{clear: true}), do: IO.puts(IO.ANSI.clear <> IO.ANSI.home)
 end

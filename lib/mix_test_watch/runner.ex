@@ -44,5 +44,5 @@ defmodule MixTestWatch.Runner do
   defp maybe_clear_terminal(%{clear: false}),
     do: :ok
   defp maybe_clear_terminal(%{clear: true}),
-    do: :ok = IO.puts(IO.ANSI.clear)
+    do: :ok = IO.puts(IO.ANSI.clear <> IO.ANSI.home)
 end

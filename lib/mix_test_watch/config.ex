@@ -10,7 +10,7 @@ defmodule MixTestWatch.Config do
   defstruct tasks:    @default_tasks,
             clear:    @default_clear,
             exclude:  @default_exclude,
-            cli_args: ""
+            cli_args: []
 
 
   @spec new([String.t]) :: %__MODULE__{}

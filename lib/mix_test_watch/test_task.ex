@@ -3,7 +3,6 @@ defmodule MixTestWatch.TestTask do
   Runs the `test` mix task, even if it has been run before.
   """
   def run(args) do
-    Mix.env(:test)
     Code.compiler_options(ignore_module_conflict: true)
     unload_test_files()
     reenable_dependancy_tasks()

@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Test.Watch.Mixfile do
+defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
   @version "0.2.6"
@@ -24,7 +24,8 @@ defmodule Mix.Tasks.Test.Watch.Mixfile do
 
   def application do
     [
-      applications: []
+      mod: {MixTestWatch, []},
+      applications: [:fs],
     ]
   end
 

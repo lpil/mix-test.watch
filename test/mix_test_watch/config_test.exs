@@ -25,6 +25,13 @@ defmodule MixTestWatch.ConfigTest do
     end
   end
 
+  test "new/1 takes :include from the env" do
+    TemporaryEnv.set :mix_test_watch, include: [".haml"] do
+      config = Config.new
+      assert config.include == [".haml"]
+    end
+  end
+
   test "new/1 passes cli_args" do
     config = Config.new(["hello", "world"])
     assert config.cli_args == ["hello", "world"]

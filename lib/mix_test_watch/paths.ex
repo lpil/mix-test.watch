@@ -12,8 +12,8 @@ defmodule MixTestWatch.Path do
 
   @spec watching?(String.t) :: boolean
 
-  def watching?(path) do
-    watched_directory?( path ) && elixir_extension?( path )
+  def watching?(config \\ %{include: []}, path) do
+    _watching?( path ) || _watching?(config, path)
   end
 
   @spec excluded?(MixTestWatch.Config.t, String.t) :: boolean
@@ -24,6 +24,13 @@ defmodule MixTestWatch.Path do
     |> Enum.any?()
   end
 
+  defp _watching?(path) do
+    watched_directory?( path ) && elixir_extension?( path )
+  end
+
+  defp _watching?(config, path) do
+    String.ends_with?(path, config.include)
+  end
 
   defp watched_directory?(path) do
     not String.starts_with?( path, @ignored_dirs )

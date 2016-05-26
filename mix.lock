@@ -1,8 +1,4 @@
-%{"dogma": {:hex, :dogma, "0.1.0"},
-  "fs": {:hex, :fs, "0.9.2"},
-  "meck": {:hex, :meck, "0.8.2"},
-  "mock": {:hex, :mock, "0.1.0"},
-  "poison": {:hex, :poison, "1.5.2"},
-  "porcelain": {:hex, :porcelain, "2.0.0"},
-  "shouldi": {:hex, :shouldi, "0.2.2"},
-  "temporary_env": {:hex, :temporary_env, "1.0.1"}}
+%{"dogma": {:hex, :dogma, "0.1.0", "665f628c7811840b090dfa79174f00429b32ba95c93079b47fb5642c157e40b0", [:mix], [{:poison, "~> 1.0", [hex: :poison, optional: false]}]},
+  "fs": {:hex, :fs, "0.9.2", "ed17036c26c3f70ac49781ed9220a50c36775c6ca2cf8182d123b6566e49ec59", [:rebar], []},
+  "poison": {:hex, :poison, "1.5.2", "560bdfb7449e3ddd23a096929fb9fc2122f709bcc758b2d5d5a5c7d0ea848910", [:mix], []},
+  "temporary_env": {:hex, :temporary_env, "1.0.1", "bdb05d9b6c7f782b16779988c83c3f1c2fb2540b902e5e1cf8afbfecbd8e801c", [:mix], []}}

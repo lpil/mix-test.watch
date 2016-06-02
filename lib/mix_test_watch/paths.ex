@@ -12,9 +12,9 @@ defmodule MixTestWatch.Path do
 
   @spec watching?(MixTestWatch.Config.t, String.t) :: boolean
 
-  def watching?(config \\ %{include_extensions: []}, path) do
+  def watching?(config \\ %{extra_extensions: []}, path) do
     watched_directory?( path )
-    && elixir_extension?(path, config.include_extensions)
+    && elixir_extension?(path, config.extra_extensions)
   end
 
   @spec excluded?(MixTestWatch.Config.t, String.t) :: boolean
@@ -29,7 +29,7 @@ defmodule MixTestWatch.Path do
     not String.starts_with?( path, @ignored_dirs )
   end
 
-  defp elixir_extension?(path, include_extensions) do
-    String.ends_with?(path, @elixir_source_endings ++ include_extensions)
+  defp elixir_extension?(path, extra_extensions) do
+    String.ends_with?(path, @elixir_source_endings ++ extra_extensions)
   end
 end

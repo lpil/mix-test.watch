@@ -6,12 +6,12 @@ defmodule MixTestWatch.Config do
   @default_tasks ~w(test)
   @default_clear false
   @default_exclude []
-  @default_included_extensions []
+  @default_extra_extensions []
 
   defstruct tasks:              @default_tasks,
             clear:              @default_clear,
             exclude:            @default_exclude,
-            include_extensions: @default_included_extensions,
+            extra_extensions:   @default_extra_extensions,
             cli_args:           []
 
 
@@ -23,7 +23,7 @@ defmodule MixTestWatch.Config do
     %__MODULE__{
       tasks:               get_tasks(),
       clear:               get_clear(),
-      include_extensions:  get_included_extensions(),
+      extra_extensions:    get_extra_extensions(),
       exclude:             get_excluded(),
       cli_args:            cli_args,
     }
@@ -42,8 +42,8 @@ defmodule MixTestWatch.Config do
     Application.get_env(:mix_test_watch, :exclude, @default_exclude)
   end
 
-  defp get_included_extensions do
-    Application.get_env(:mix_test_watch, :include_extensions,
-      @default_included_extensions)
+  defp get_extra_extensions do
+    Application.get_env(:mix_test_watch, :extra_extensions,
+      @default_extra_extensions)
   end
 end

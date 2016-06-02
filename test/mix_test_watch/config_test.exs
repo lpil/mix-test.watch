@@ -25,10 +25,10 @@ defmodule MixTestWatch.ConfigTest do
     end
   end
 
-  test "new/1 takes :include_extensions from the env" do
-    TemporaryEnv.set :mix_test_watch, include_extensions: [".haml"] do
+  test "new/1 takes :extra_extensions from the env" do
+    TemporaryEnv.set :mix_test_watch, extra_extensions: [".haml"] do
       config = Config.new
-      assert config.include_extensions == [".haml"]
+      assert config.extra_extensions == [".haml"]
     end
   end
 

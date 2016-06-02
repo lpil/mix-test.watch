@@ -27,12 +27,12 @@ defmodule MixTestWatch.PathTest do
     assert watching? "foo.yrl"
   end
 
-  test "included files are watched" do
-    included = %{include_extensions: [".haml", ".foo", ".txt"] }
-    assert watching? included, "foo.ex"
-    assert watching? included, "index.html.haml"
-    assert watching? included, "my.foo"
-    assert watching? included, "best.txt"
+  test "extra extensions are watched" do
+    extras = %{extra_extensions: [".ex", ".haml", ".foo", ".txt"] }
+    assert watching? extras, "foo.ex"
+    assert watching? extras, "index.html.haml"
+    assert watching? extras, "my.foo"
+    assert watching? extras, "best.txt"
   end
 
   test "misc files are not watched" do

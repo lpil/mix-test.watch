@@ -27,6 +27,10 @@ defmodule MixTestWatch.PathTest do
     assert watching? "foo.yrl"
   end
 
+  test ".hrl files are watched" do
+    assert watching? "foo.hrl"
+  end
+
   test "extra extensions are watched" do
     extras = %{extra_extensions: [".ex", ".haml", ".foo", ".txt"] }
     assert watching? extras, "foo.ex"

@@ -45,7 +45,7 @@ defmodule MixTestWatch.Watcher do
   def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
     config = get_config()
     path   = to_string(path)
-    if MPath.watching?(path) and not MPath.excluded?(config, path) do
+    if MPath.watching?(config, path) and not MPath.excluded?(config, path) do
       do_run_tasks( config )
     end
     {:noreply, state}

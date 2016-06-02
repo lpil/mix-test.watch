@@ -1,7 +1,7 @@
 defmodule MixTestWatch.PathTest do
   use ExUnit.Case
 
-  import MixTestWatch.Path, only: [watching?: 1, excluded?: 2]
+  import MixTestWatch.Path, only: [watching?: 1, watching?: 2, excluded?: 2]
 
   test ".ex files are watched" do
     assert watching? "foo.ex"
@@ -25,6 +25,14 @@ defmodule MixTestWatch.PathTest do
 
   test ".yrl files are watched" do
     assert watching? "foo.yrl"
+  end
+
+  test "extra extensions are watched" do
+    extras = %{extra_extensions: [".ex", ".haml", ".foo", ".txt"] }
+    assert watching? extras, "foo.ex"
+    assert watching? extras, "index.html.haml"
+    assert watching? extras, "my.foo"
+    assert watching? extras, "best.txt"
   end
 
   test "misc files are not watched" do

@@ -8,6 +8,8 @@ Changelog
 - Speed improvements thanks to VM reuse.
 - Paths can be ignored by watcher (Alex Myasoedov @msoedov)
 - Ability to specify shell command removed.
+- Ability to specify additional watched file extensions. (Dave Shah @daveshah)
+- Erlang `.hrl` header files are now watched.
 
 ## v0.2.6 - 2016.02.28
 

@@ -75,8 +75,10 @@ If you want mix test.watch to clear the console before each run, you can
 enable this option in your config/dev.exs as follows:
 
 ```elixir
-config :mix_test_watch,
-  clear: true
+if Mix.env == :dev do      # prevents :mix_test_watch warning, alternatively use a config/dev.exs file
+  config :mix_test_watch,
+    clear: true
+end    
 ```
 
 ## Excluding files or directories

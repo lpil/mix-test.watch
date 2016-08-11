@@ -96,6 +96,10 @@ config :mix_test_watch,
 
 On Linux you may need to install `inotify-tools`.
 
+## Desktop Notifications
+
+You can enable desktop notifications with [ex_unit_notifier](https://github.com/navinpeiris/ex_unit_notifier) 
+
 
 ## Licence
 

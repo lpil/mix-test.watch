@@ -19,7 +19,7 @@ defmodule MixTestWatch.Runner do
   Run tests using the runner from the config.
   """
   def run(%Config{} = config) do
-    maybe_clear_terminal(config)
+    :ok = maybe_clear_terminal(config)
     IO.puts "\nRunning tests..."
     :ok = config.runner.run(config)
     :ok
@@ -30,7 +30,7 @@ defmodule MixTestWatch.Runner do
   """
   def run(path, %Config{} = config) do
     if MTW.Path.watching?(path, config) do
-      MTW.Runner.run(config)
+      :ok = MTW.Runner.run(config)
     else
       :ok
     end
@@ -42,7 +42,7 @@ defmodule MixTestWatch.Runner do
   #
 
   defp maybe_clear_terminal(%{clear: false}),
-    do: nil
+    do: :ok
   defp maybe_clear_terminal(%{clear: true}),
-    do: IO.puts IO.ANSI.clear
+    do: :ok = IO.puts(IO.ANSI.clear)
 end

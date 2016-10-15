@@ -23,8 +23,7 @@ defmodule MixTestWatch.Mixfile do
   end
 
   def application do
-    [
-      mod: {MixTestWatch, []},
+    [ mod: {MixTestWatch, []},
       applications: [:fs],
     ]
   end

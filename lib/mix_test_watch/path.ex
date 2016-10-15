@@ -3,23 +3,32 @@ defmodule MixTestWatch.Path do
   Decides if we should refresh for a path.
   """
 
-  @elixir_source_endings ~w(.erl .ex .exs .eex .xrl .yrl .hrl)
+  alias MixTestWatch.Config
 
-  @ignored_dirs ~w(
-    deps/
-    _build/
-  )
+  @elixir_source_endings ~w(.erl .ex .exs .eex .xrl .yrl .hrl)
+  @ignored_dirs ~w(deps/ _build/)
+
+
+  #
+  # Public API
+  #
 
   @spec watching?(MixTestWatch.Config.t, String.t) :: boolean
 
-  def watching?(config \\ %{extra_extensions: []}, path) do
+  def watching?(path, config \\ %Config{}) do
     watched_directory?( path )
-    && elixir_extension?(path, config.extra_extensions)
+      and elixir_extension?(path, config.extra_extensions)
+      and not excluded?(config, path)
   end
+
+
+  #
+  # Internal functions
+  #
 
   @spec excluded?(MixTestWatch.Config.t, String.t) :: boolean
 
-  def excluded?(config, path) do
+  defp excluded?(config, path) do
     config.exclude
     |> Enum.map(fn pattern -> Regex.match?(pattern, path)  end)
     |> Enum.any?()

@@ -1,7 +1,8 @@
 defmodule MixTestWatch.PathTest do
   use ExUnit.Case
 
-  import MixTestWatch.Path, only: [watching?: 1, watching?: 2, excluded?: 2]
+  import MixTestWatch.Path, only: [watching?: 1, watching?: 2]
+  alias MixTestWatch.Config
 
   test ".ex files are watched" do
     assert watching? "foo.ex"
@@ -32,11 +33,11 @@ defmodule MixTestWatch.PathTest do
   end
 
   test "extra extensions are watched" do
-    extras = %{extra_extensions: [".ex", ".haml", ".foo", ".txt"] }
-    assert watching? extras, "foo.ex"
-    assert watching? extras, "index.html.haml"
-    assert watching? extras, "my.foo"
-    assert watching? extras, "best.txt"
+    config = %Config{ extra_extensions: [".ex", ".haml", ".foo", ".txt"] }
+    assert watching?("foo.ex", config)
+    assert watching?("index.html.haml", config)
+    assert watching?("my.foo", config)
+    assert watching?("best.txt", config)
   end
 
   test "misc files are not watched" do
@@ -62,11 +63,17 @@ defmodule MixTestWatch.PathTest do
   end
 
   test "migrations_.* files should be excluded watched" do
-    assert excluded? %{exclude: [~r/migrations_.*/]}, "migrations_files/foo.exs"
+    refute watching?(
+      "migrations_files/foo.exs",
+      %Config{ exclude: [~r/migrations_.*/] }
+    )
   end
 
   test "app.ex is not excluded by migrations_.* pattern" do
-    refute excluded? %{exclude: [~r/migrations_.*/]}, "app.ex"
+    assert watching?(
+      "app.ex",
+      %Config{ exclude: [~r/migrations_.*/] }
+    )
   end
 
 end

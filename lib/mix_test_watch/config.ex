@@ -3,16 +3,18 @@ defmodule MixTestWatch.Config do
   Responsible for gathering and packaging the configuration for the task.
   """
 
+  @default_runner MixTestWatch.HotRunner
   @default_tasks ~w(test)
   @default_clear false
   @default_exclude []
   @default_extra_extensions []
 
-  defstruct tasks:              @default_tasks,
-            clear:              @default_clear,
-            exclude:            @default_exclude,
-            extra_extensions:   @default_extra_extensions,
-            cli_args:           []
+  defstruct tasks:            @default_tasks,
+            clear:            @default_clear,
+            runner:           @default_runner,
+            exclude:          @default_exclude,
+            extra_extensions: @default_extra_extensions,
+            cli_args:         []
 
 
   @spec new([String.t]) :: %__MODULE__{}
@@ -21,14 +23,19 @@ defmodule MixTestWatch.Config do
   """
   def new(cli_args \\ []) do
     %__MODULE__{
-      tasks:               get_tasks(),
-      clear:               get_clear(),
-      extra_extensions:    get_extra_extensions(),
-      exclude:             get_excluded(),
-      cli_args:            cli_args,
+      tasks:             get_tasks(),
+      clear:             get_clear(),
+      runner:            get_runner(),
+      exclude:           get_excluded(),
+      cli_args:          cli_args,
+      extra_extensions:  get_extra_extensions(),
     }
   end
 
+
+  defp get_runner do
+    Application.get_env(:mix_test_watch, :runner, @default_runner)
+  end
 
   defp get_tasks do
     Application.get_env(:mix_test_watch, :tasks, @default_tasks)

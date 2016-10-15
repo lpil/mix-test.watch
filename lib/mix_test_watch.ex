@@ -7,9 +7,11 @@ defmodule MixTestWatch do
   use Application
   alias MixTestWatch.Watcher
 
+  #
+  # Public interface
+  #
+
   @spec run([String.t]) :: no_return
-
-
   def run(args \\ []) when is_list(args) do
     Mix.env :test
     put_config(args)
@@ -18,6 +20,11 @@ defmodule MixTestWatch do
     Watcher.run_tasks
     no_halt_unless_in_repl()
   end
+
+
+  #
+  # Application callback
+  #
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
@@ -28,6 +35,10 @@ defmodule MixTestWatch do
     Supervisor.start_link(children, opts)
   end
 
+
+  #
+  # Internal functions
+  #
 
   defp put_config(args) do
     config = MixTestWatch.Config.new(args)

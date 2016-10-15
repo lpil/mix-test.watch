@@ -1,4 +1,4 @@
-defmodule MixTestWatch.Message do
+defmodule MixTestWatch.MessageInbox do
   @moduledoc """
   Helpers for managing process messages.
   """

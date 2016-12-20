@@ -10,7 +10,7 @@ defmodule MixTestWatch.Mixfile do
       elixir: "~> 1.0",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      deps: deps,
+      deps: deps(),
       name: "mix test.watch",
       description: "Automatically run tests when files change",
       package: [

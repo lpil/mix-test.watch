@@ -7,7 +7,7 @@ defmodule MixTestWatch.RunnerTest do
 
   defmodule DummyRunner do
     def run(config) do
-      Agent.get_and_update(__MODULE__, fn(data) -> {:ok, [config|data]} end)
+      Agent.get_and_update(__MODULE__, fn(data) -> {:ok, [config | data]} end)
     end
   end
 

@@ -9,7 +9,7 @@ defmodule MixTestWatch.CompileTask do
   tasks = ~w(compile compile.all compile.protocols loadpaths deps.loadpaths)
   dep_tasks =
     Mix.Tasks.Compile.compilers()
-    |> Enum.reduce(tasks, fn(x, acc)-> ["compile.#{x}"|acc] end)
+    |> Enum.reduce(tasks, fn(x, acc) -> ["compile.#{x}" | acc] end)
 
   @dep_tasks dep_tasks
 

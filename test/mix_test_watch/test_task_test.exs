@@ -19,7 +19,7 @@ defmodule MixTestWatch.TestTaskTest do
 
   test "elixir config does not grow continuously" do
     assert :elixir_config.get(:at_exit) == []
-    silence(fn-> run_helper_test end)
+    silence(fn-> run_helper_test() end)
     assert :elixir_config.get(:at_exit) == []
   end
 

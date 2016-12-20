@@ -15,7 +15,7 @@ defmodule MixTestWatch.TestTask do
   end
 
   defp unload_test_files do
-    test_paths
+    test_paths()
     |> Mix.Utils.extract_files("*")
     |> Enum.map(&Path.expand/1)
     |> Code.unload_files

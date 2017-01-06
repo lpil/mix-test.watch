@@ -28,5 +28,20 @@ defmodule MixTestWatch.RunnerTest do
       Running tests...
       """
     end
+
+    test "It outputs timestamp when specified by the config" do
+      config = %Config{ runner: DummyRunner, timestamp: true}
+      output = capture_io fn ->
+        Runner.run(config)
+      end
+      assert Agent.get(DummyRunner, fn(x) -> x end) == [config]
+      timestamp = output
+        |> String.replace_leading("""
+
+      Running tests...
+      """, "")
+      |> String.trim
+      assert {:ok, _} = NaiveDateTime.from_iso8601(timestamp)
+    end
   end
 end

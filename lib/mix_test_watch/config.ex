@@ -6,11 +6,13 @@ defmodule MixTestWatch.Config do
   @default_runner MixTestWatch.HotRunner
   @default_tasks ~w(test)
   @default_clear false
+  @default_timestamp false
   @default_exclude []
   @default_extra_extensions []
 
   defstruct tasks:            @default_tasks,
             clear:            @default_clear,
+            timestamp:        @default_timestamp,
             runner:           @default_runner,
             exclude:          @default_exclude,
             extra_extensions: @default_extra_extensions,
@@ -25,6 +27,7 @@ defmodule MixTestWatch.Config do
     %__MODULE__{
       tasks:             get_tasks(),
       clear:             get_clear(),
+      timestamp:         get_timestamp(),
       runner:            get_runner(),
       exclude:           get_excluded(),
       cli_args:          cli_args,
@@ -43,6 +46,10 @@ defmodule MixTestWatch.Config do
 
   defp get_clear do
     Application.get_env(:mix_test_watch, :clear, @default_clear)
+  end
+
+  defp get_timestamp do
+    Application.get_env(:mix_test_watch, :timestamp, @default_timestamp)
   end
 
   defp get_excluded do

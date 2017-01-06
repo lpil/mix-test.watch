@@ -49,4 +49,11 @@ defmodule MixTestWatch.ConfigTest do
     end
   end
 
+  test "new/1 takes :timestamp from the env" do
+    TemporaryEnv.set :mix_test_watch, timestamp: true do
+      config = Config.new
+      assert config.timestamp
+    end
+  end
+
 end

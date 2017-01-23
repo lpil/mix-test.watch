@@ -56,4 +56,10 @@ defmodule MixTestWatch.ConfigTest do
     end
   end
 
+  test "new/1 takes :shell_prefix from the env" do
+    TemporaryEnv.set :mix_test_watch, cli_executable: "iex -S" do
+      config = Config.new
+      assert config.cli_executable == "iex -S"
+    end
+  end
 end

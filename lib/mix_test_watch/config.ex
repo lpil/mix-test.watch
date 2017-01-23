@@ -3,12 +3,14 @@ defmodule MixTestWatch.Config do
   Responsible for gathering and packaging the configuration for the task.
   """
 
-  @default_runner MixTestWatch.HotRunner
+  @default_runner MixTestWatch.PortRunner
   @default_tasks ~w(test)
   @default_clear false
   @default_timestamp false
   @default_exclude []
   @default_extra_extensions []
+  @default_cli_executable "mix"
+
 
   defstruct tasks:            @default_tasks,
             clear:            @default_clear,
@@ -16,8 +18,8 @@ defmodule MixTestWatch.Config do
             runner:           @default_runner,
             exclude:          @default_exclude,
             extra_extensions: @default_extra_extensions,
+            cli_executable:   @default_cli_executable,
             cli_args:         []
-
 
   @spec new([String.t]) :: %__MODULE__{}
   @doc """
@@ -30,6 +32,7 @@ defmodule MixTestWatch.Config do
       timestamp:         get_timestamp(),
       runner:            get_runner(),
       exclude:           get_excluded(),
+      cli_executable:    get_cli_executable(),
       cli_args:          cli_args,
       extra_extensions:  get_extra_extensions(),
     }
@@ -56,8 +59,13 @@ defmodule MixTestWatch.Config do
     Application.get_env(:mix_test_watch, :exclude, @default_exclude)
   end
 
+  defp get_cli_executable do
+    Application.get_env(:mix_test_watch, :cli_executable,
+                        @default_cli_executable)
+  end
+
   defp get_extra_extensions do
     Application.get_env(:mix_test_watch, :extra_extensions,
-      @default_extra_extensions)
+                        @default_extra_extensions)
   end
 end

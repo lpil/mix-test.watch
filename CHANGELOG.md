@@ -1,13 +1,17 @@
 Changelog
 =========
 
-## Unreleased
+## Unreleased (Blocked)
 
-- The existing VM is now reused for running the tests.
-- Windows support thanks to VM reuse.
-- Speed improvements thanks to VM reuse.
+- The existing VM can now reused for running the tests with the HotRunner.
+  This gives us Windows support and a performance increase.
+  Sadly it is not production ready yet due to a bug in the Elixir compiler.
+
+## Unreleased (To Release)
+
+- Test runs optionally print a timestamp (Scotty @unclesnottie)
 - Paths can be ignored by watcher (Alex Myasoedov @msoedov)
-- Ability to specify shell command removed.
+- Paths can be ignored by watcher (Alex Myasoedov @msoedov)
 - Ability to specify additional watched file extensions. (Dave Shah @daveshah)
 - Erlang `.hrl` header files are now watched.
 

@@ -1,7 +1,7 @@
 defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
-  @version "0.2.6"
+  @version "0.3.0"
 
   def project do
     [app: :mix_test_watch,
@@ -29,6 +29,8 @@ defmodule MixTestWatch.Mixfile do
      # Style linter
      {:dogma, "~> 0.1", only: ~w(dev test)a},
      # App env state test helper
-     {:temporary_env, "~> 1.0", only: :test}]
+     {:temporary_env, "~> 1.0", only: :test},
+     # Documentation generator
+     {:ex_doc, ">= 0.12.0", only: :dev}]
   end
 end

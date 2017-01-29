@@ -40,13 +40,16 @@ linter after my tests I would do so like this.
 [dogma]: https://github.com/lpil/dogma
 
 ```elixir
+# config/config.exs
 use Mix.Config
 
-config :mix_test_watch,
-  tasks: [
-    "test",
-    "dogma",
-  ]
+if Mix.env == :dev do
+  config :mix_test_watch,
+    tasks: [
+      "test",
+      "dogma",
+    ]
+end
 ```
 
 Tasks are run in the order they appear in the list, and the progression will
@@ -75,10 +78,13 @@ If you want mix test.watch to clear the console before each run, you can
 enable this option in your config/dev.exs as follows:
 
 ```elixir
-if Mix.env == :dev do      # prevents :mix_test_watch warning, alternatively use a config/dev.exs file
+# config/config.exs
+use Mix.Config
+
+if Mix.env == :dev do
   config :mix_test_watch,
     clear: true
-end    
+end
 ```
 
 ## Excluding files or directories
@@ -87,11 +93,14 @@ To ignore changes from specific files or directories just add `exclude:` regexp
 patterns to your config in `mix.exs`:
 
 ```elixir
-config :mix_test_watch,
-  exclude: [
-            ~r/db_migration\/.*/,
-            ~r/useless_.*\.exs/
-           ]
+# config/config.exs
+use Mix.Config
+
+if Mix.env == :dev do
+  config :mix_test_watch,
+    exclude: [~r/db_migration\/.*/,
+              ~r/useless_.*\.exs/]
+end
 ```
 
 ## Compatibility Notes
@@ -100,7 +109,8 @@ On Linux you may need to install `inotify-tools`.
 
 ## Desktop Notifications
 
-You can enable desktop notifications with [ex_unit_notifier](https://github.com/navinpeiris/ex_unit_notifier) 
+You can enable desktop notifications with
+[ex_unit_notifier](https://github.com/navinpeiris/ex_unit_notifier).
 
 
 ## Licence

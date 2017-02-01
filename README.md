@@ -13,12 +13,19 @@ Because TDD is awesome.
 
 ## Usage
 
-Add it to your dependencies
+Add it to your dependencies:
 
 ```elixir
-# mix.exs
+# mix.exs (Elixir 1.4)
 def deps do
-  [{:mix_test_watch, "~> 0.2", only: :dev}]
+  [{:mix_test_watch, "~> 0.3", only: :dev, runtime: false}]  
+end
+```
+
+```elixir
+# mix.exs (Elixir 1.3 and earlier)
+def deps do
+  [{:mix_test_watch, "~> 0.3", only: :dev}]
 end
 ```
 

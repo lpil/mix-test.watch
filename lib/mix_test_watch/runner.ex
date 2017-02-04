@@ -1,7 +1,6 @@
 defmodule MixTestWatch.Runner do
   @moduledoc false
 
-  alias MixTestWatch, as: MTW
   alias MixTestWatch.Config
 
   #

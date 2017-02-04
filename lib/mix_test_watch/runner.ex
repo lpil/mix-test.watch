@@ -26,17 +26,6 @@ defmodule MixTestWatch.Runner do
     :ok
   end
 
-  @doc """
-  Run tests using the runner from the config if the file is a watched file.
-  """
-  def run(path, %Config{} = config) do
-    if MTW.Path.watching?(path, config) do
-      :ok = MTW.Runner.run(config)
-    else
-      :ok
-    end
-  end
-
 
   #
   # Internal functions

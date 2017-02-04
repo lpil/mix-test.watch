@@ -41,8 +41,10 @@ defmodule MixTestWatch.Watcher do
   def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
     config = get_config()
     path   = to_string(path)
-    MTW.Runner.run(path, config)
-    MTW.MessageInbox.flush
+    if MTW.Path.watching?(path, config) do
+      MTW.Runner.run(config)
+      MTW.MessageInbox.flush
+    end
     {:noreply, state}
   end
 

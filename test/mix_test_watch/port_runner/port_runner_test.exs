@@ -6,10 +6,10 @@ defmodule MixTestWatch.PortRunnerTest do
 
   describe "build_tasks_cmds/1" do
     test "appends commandline arguments from passed config" do
-      config = %Config{ cli_args: "test/mix_test_watch/a_test.exs:15" }
+      config = %Config{ cli_args: ["--exclude", "integration"] }
       expected = "MIX_ENV=test mix do run -e "
-        <> "'Application.put_env(:elixir, :ansi_enabled, true);', "
-        <> "test test/mix_test_watch/a_test.exs:15"
+              <> "'Application.put_env(:elixir, :ansi_enabled, true);', "
+              <> "test --exclude integration"
       assert PortRunner.build_tasks_cmds(config) == expected
     end
 

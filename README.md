@@ -18,7 +18,7 @@ Add it to your dependencies:
 ```elixir
 # mix.exs (Elixir 1.4)
 def deps do
-  [{:mix_test_watch, "~> 0.3", only: :dev, runtime: false}]  
+  [{:mix_test_watch, "~> 0.3", only: :dev, runtime: false}]
 end
 ```
 
@@ -59,10 +59,31 @@ if Mix.env == :dev do
 end
 ```
 
-Tasks are run in the order they appear in the list, and the progression will
-stop if any command returns a non-zero exit code.
+## Running Additional Mix Tasks On Start Up
 
-All tasks are run with `MIX_ENV` set to `test`.
+Through the mix config it is also possible to run setup mix tasks prior to
+running your test suite.  You can take advantage the `setup_tasks` to, for example,
+ensure your database is configured before your tests start.
+
+
+```elixir
+# config/config.exs
+use Mix.Config
+
+if Mix.env == :dev do
+  config :mix_test_watch,
+    setup_tasks: [
+      "ecto.drop --quiet",
+      "ecto.create --quiet",
+      "ecto.migrate"
+    ]
+end
+```
+
+Setup tasks are run in the order they appear in the list, and the progression will
+stop if any command returns a non-zero exit code.  They will only run once.
+
+All setup tasks are run with `MIX_ENV` set to `test`.
 
 
 ## Passing Arguments To Tasks

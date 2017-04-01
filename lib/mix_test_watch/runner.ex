@@ -25,6 +25,14 @@ defmodule MixTestWatch.Runner do
     :ok
   end
 
+  @doc """
+  Run the setup tasks prior to running the real tests
+  """
+  def run_once(%Config{} = config) do
+    IO.puts "\nRunning setup_tasks (just once)..."
+    :ok = config.runner.run(config |> Map.put(:tasks, config.setup_tasks))
+    :ok
+  end
 
   #
   # Internal functions

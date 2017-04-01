@@ -16,6 +16,10 @@ defmodule MixTestWatch.Watcher do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
+  def run_setup_tasks do
+    GenServer.cast(__MODULE__, :run_setup_tasks)
+  end
+
   def run_tasks do
     GenServer.cast(__MODULE__, :run_tasks)
   end
@@ -30,6 +34,12 @@ defmodule MixTestWatch.Watcher do
   def init(_) do
     :ok = :fs.subscribe
     {:ok, []}
+  end
+
+  def handle_cast(:run_setup_tasks, state) do
+    config = get_config()
+    MTW.Runner.run_once(config)
+    {:noreply, state}
   end
 
   def handle_cast(:run_tasks, state) do

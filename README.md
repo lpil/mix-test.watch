@@ -18,7 +18,7 @@ Add it to your dependencies:
 ```elixir
 # mix.exs (Elixir 1.4)
 def deps do
-  [{:mix_test_watch, "~> 0.3", only: :dev, runtime: false}]  
+  [{:mix_test_watch, "~> 0.3", only: :dev, runtime: false}]
 end
 ```
 
@@ -107,6 +107,24 @@ if Mix.env == :dev do
   config :mix_test_watch,
     exclude: [~r/db_migration\/.*/,
               ~r/useless_.*\.exs/]
+end
+```
+
+## Forcing ANSI colors in the terminal
+
+The config `:force_colors` is defaulted to `true` which will force the
+console to have [ANSI coloring](https://hexdocs.pm/elixir/IO.ANSI.html#enabled?/0).
+
+If Elixir can detect during startup that both `stdout` and `stderr` are terminals,
+then you set the value `false`, for example shown below.
+
+```elixir
+# config/config.exs
+use Mix.Config
+
+if Mix.env == :dev do
+  config :mix_test_watch,
+    :force_colors false
 end
 ```
 

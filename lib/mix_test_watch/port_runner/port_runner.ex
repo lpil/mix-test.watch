@@ -28,11 +28,17 @@ defmodule MixTestWatch.PortRunner do
   end
 
 
-  @ansi "run -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
+  defp ansi(%{force_colors: false}) do
+    []
+  end
+
+  defp ansi(%{force_colors: true}) do
+    ["do", "run -e 'Application.put_env(:elixir, :ansi_enabled, true);',"]
+  end
 
   defp task_command(task, config) do
     args = Enum.join(config.cli_args, " ")
-    [config.cli_executable, "do", @ansi <> ",", task, args]
+    [config.cli_executable] ++ ansi(config) ++ [task, args]
     |> Enum.filter(&(&1))
     |> Enum.join(" ")
     |> fn(command) -> "MIX_ENV=test #{command}" end.()

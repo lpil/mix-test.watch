@@ -7,7 +7,7 @@ defmodule MixTestWatch.Config do
   @default_tasks ~w(test)
   @default_clear false
   @default_timestamp false
-  @default_exclude []
+  @default_exclude [~r/\.#/]
   @default_extra_extensions []
   @default_cli_executable "mix"
 

@@ -1,7 +1,21 @@
 Changelog
 =========
 
-## v0.3.0
+## v0.4.0 - 2017-04-22
+
+- Emacs temporary files can no longer trigger a test run.
+
+## v0.3.3 - 2017-02-08
+
+- Fixed a bug where arguments were not being correctly passed to the
+  test running BEAM instance.
+
+## v0.3.1 - 2017-02-04
+
+- Fixed race condition bug on OSX where tests would fail to run when
+  files are changed.
+
+## v0.3.0 - 2017-01-29
 
 - Test runs optionally print a timestamp (Scotty @unclesnottie)
 - Paths can be ignored by watcher (Alex Myasoedov @msoedov)
@@ -12,12 +26,12 @@ Changelog
   This gives us Windows support and a performance increase.
   Sadly it cannot be used as the default due to a bug in the Elixir compiler.
 
-## v0.2.6 - 2016.02.28
+## v0.2.6 - 2016-02-28
 
 - The terminal can now be cleared between test runs.
   (Gerard de Brieder @smeevil)
 
-## v0.2.5 - 2015.12.31
+## v0.2.5 - 2015-12-31
 
 - It is now possible to run addition tasks using mix config.
 - Erlang `.xrl` and `.yrl` files are watched. (John Hamelink @johnhamelink)
@@ -25,12 +39,12 @@ Changelog
   (John Hamelink @johnhamelink)
 - Command line arguments are forwarded to tasks being run. (Johan Lind @behe)
 
-## v0.2.3 - 2015.08.23
+## v0.2.3 - 2015-08-23
 
 - The `_build` directory is ignored, as well as `deps/`.
 - Erlang `.erl` files are now watched.
 
-## v0.2.2 - 2015.08.22
+## v0.2.2 - 2015-08-22
 
 - Tests now run once immediately after running the mix task. (Johan Lind @behe)
 - Porcelain dependancy removed.

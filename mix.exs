@@ -1,7 +1,7 @@
 defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
-  @version "0.3.3"
+  @version "0.4.0"
 
   def project do
     [app: :mix_test_watch,

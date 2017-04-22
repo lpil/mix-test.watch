@@ -25,6 +25,11 @@ defmodule MixTestWatch.ConfigTest do
     end
   end
 
+  test ":exclude contains common editor temp/swap files by default" do
+    config = Config.new
+    assert ~r/\.#/ in config.exclude # Emacs lock symlink
+  end
+
   test "new/1 takes :extra_extensions from the env" do
     TemporaryEnv.set :mix_test_watch, extra_extensions: [".haml"] do
       config = Config.new

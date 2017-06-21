@@ -25,7 +25,7 @@ defmodule MixTestWatch.Mixfile do
 
   defp deps do
     [# File system event watcher
-     {:fs, "~> 2.12"},
+     {:fs, "~> 0.9.1"},
      # Style linter
      {:dogma, "~> 0.1", only: ~w(dev test)a},
      # App env state test helper

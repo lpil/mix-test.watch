@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## v0.4.1 - 2017-06-21
+
+- Revert to `fs` v0.9.1 to maintain Phoenix Live Reload compatibility.
+  https://github.com/phoenixframework/phoenix_live_reload/commit/e54bf6fb301436797ff589e0b76a047bb79b6870
+
 ## v0.4.0 - 2017-04-22
 
 - Emacs temporary files can no longer trigger a test run.

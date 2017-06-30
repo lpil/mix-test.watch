@@ -78,6 +78,13 @@ mix test.watch test/file/to_test.exs
 Note that if you have configured more than one task to be run these arguments
 will be passed to all the tasks run, not just the test command.
 
+## Running tests of modules that changed
+
+Elixir 1.3 introduced `--stale` option that will run only those test files which reference modules that have changed since the last run. You can pass it to test.watch:
+
+```
+mix test.watch --stale
+```
 
 ## Clearing The Console Before Each Run
 

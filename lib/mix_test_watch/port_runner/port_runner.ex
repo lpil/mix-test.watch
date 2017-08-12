@@ -11,7 +11,9 @@ defmodule MixTestWatch.PortRunner do
   def run(%Config{} = config) do
     command = build_tasks_cmds(config)
     case (:os.type()) do
-      {:win32, _} -> System.cmd("cmd", ["/C", "set MIX_ENV=test&& mix test"], into: IO.stream(:stdio, :line)) 
+      {:win32, _} -> System.cmd("cmd",
+                                ["/C", "set MIX_ENV=test&& mix test"],
+                                into: IO.stream(:stdio, :line))
       _ -> System.cmd("sh", ["-c", command], into: IO.stream(:stdio, :line))
     end
     :ok

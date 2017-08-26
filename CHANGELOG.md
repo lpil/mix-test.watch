@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v0.5.0 - 2017-08-26
+
+- Windows support (Rustam @rustamtolipov)
+
 ## v0.4.1 - 2017-06-21
 
 - Revert to `fs` v0.9.1 to maintain Phoenix Live Reload compatibility.

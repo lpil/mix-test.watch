@@ -4,6 +4,7 @@ defmodule MixTestWatch.Config do
   """
 
   @default_runner MixTestWatch.PortRunner
+  @default_setup_tasks ~w()
   @default_tasks ~w(test)
   @default_clear false
   @default_timestamp false
@@ -12,7 +13,8 @@ defmodule MixTestWatch.Config do
   @default_cli_executable "mix"
 
 
-  defstruct tasks:            @default_tasks,
+  defstruct setup_tasks:      @default_setup_tasks,
+            tasks:            @default_tasks,
             clear:            @default_clear,
             timestamp:        @default_timestamp,
             runner:           @default_runner,
@@ -27,6 +29,7 @@ defmodule MixTestWatch.Config do
   """
   def new(cli_args \\ []) do
     %__MODULE__{
+      setup_tasks:       get_setup_tasks(),
       tasks:             get_tasks(),
       clear:             get_clear(),
       timestamp:         get_timestamp(),
@@ -41,6 +44,10 @@ defmodule MixTestWatch.Config do
 
   defp get_runner do
     Application.get_env(:mix_test_watch, :runner, @default_runner)
+  end
+
+  defp get_setup_tasks do
+    Application.get_env(:mix_test_watch, :setup_tasks, @default_setup_tasks)
   end
 
   defp get_tasks do

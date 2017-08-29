@@ -17,6 +17,7 @@ defmodule MixTestWatch do
     put_config(args)
     :ok = Application.ensure_started(:fs)
     :ok = Application.ensure_started(:mix_test_watch)
+    Watcher.run_setup_tasks
     Watcher.run_tasks
     no_halt_unless_in_repl()
   end

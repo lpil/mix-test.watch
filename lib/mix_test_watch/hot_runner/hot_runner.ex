@@ -12,11 +12,10 @@ defmodule MixTestWatch.HotRunner do
   Run tests using the runner from the config.
   """
   def run(%Config{} = config) do
-    MTW.CompileTask.run
+    MTW.CompileTask.run()
     config.tasks |> Enum.each(&run_task(&1, config.cli_args))
     :ok
   end
-
 
   #
   # Internal functions
@@ -25,6 +24,7 @@ defmodule MixTestWatch.HotRunner do
   defp run_task("test", args) do
     MTW.TestTask.run(args)
   end
+
   defp run_task(task, args) do
     MTW.GenTask.run(task, args)
   end

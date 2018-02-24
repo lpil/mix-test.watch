@@ -20,15 +20,14 @@ defmodule MixTestWatch.Watcher do
     GenServer.cast(__MODULE__, :run_tasks)
   end
 
-
   #
   # Genserver callbacks
   #
 
-  @spec init(String.t) :: {:ok, %{ args: String.t}}
+  @spec init(String.t()) :: {:ok, %{args: String.t()}}
 
   def init(_) do
-    :ok = :fs.subscribe
+    :ok = :fs.subscribe()
     {:ok, []}
   end
 
@@ -40,14 +39,15 @@ defmodule MixTestWatch.Watcher do
 
   def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
     config = get_config()
-    path   = to_string(path)
+    path = to_string(path)
+
     if MTW.Path.watching?(path, config) do
       MTW.Runner.run(config)
-      MTW.MessageInbox.flush
+      MTW.MessageInbox.flush()
     end
+
     {:noreply, state}
   end
-
 
   #
   # Internal functions

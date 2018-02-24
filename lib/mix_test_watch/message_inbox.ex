@@ -9,8 +9,9 @@ defmodule MixTestWatch.MessageInbox do
   """
   def flush do
     receive do
-      _       -> flush()
-      after 0 -> :ok
+      _ -> flush()
+    after
+      0 -> :ok
     end
   end
 end

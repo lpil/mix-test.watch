@@ -11,14 +11,14 @@ defmodule MixTestWatch.TestTask do
   end
 
   defp test_paths do
-    Mix.Project.config[:test_paths] || ["test"]
+    Mix.Project.config()[:test_paths] || ["test"]
   end
 
   defp unload_test_files do
     test_paths()
     |> Mix.Utils.extract_files("*")
     |> Enum.map(&Path.expand/1)
-    |> Code.unload_files
+    |> Code.unload_files()
   end
 
   defp reenable_dependancy_tasks do

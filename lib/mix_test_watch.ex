@@ -11,16 +11,15 @@ defmodule MixTestWatch do
   # Public interface
   #
 
-  @spec run([String.t]) :: no_return
+  @spec run([String.t()]) :: no_return
   def run(args \\ []) when is_list(args) do
-    Mix.env :test
+    Mix.env(:test)
     put_config(args)
     :ok = Application.ensure_started(:fs)
     :ok = Application.ensure_started(:mix_test_watch)
-    Watcher.run_tasks
+    Watcher.run_tasks()
     no_halt_unless_in_repl()
   end
-
 
   #
   # Application callback
@@ -28,13 +27,14 @@ defmodule MixTestWatch do
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
+
     children = [
-      worker(Watcher, []),
+      worker(Watcher, [])
     ]
+
     opts = [strategy: :one_for_one, name: Sup.Supervisor]
     Supervisor.start_link(children, opts)
   end
-
 
   #
   # Internal functions
@@ -46,8 +46,8 @@ defmodule MixTestWatch do
   end
 
   defp no_halt_unless_in_repl do
-    unless Code.ensure_loaded?(IEx) && IEx.started? do
-      :timer.sleep :infinity
+    unless Code.ensure_loaded?(IEx) && IEx.started?() do
+      :timer.sleep(:infinity)
     end
   end
 end

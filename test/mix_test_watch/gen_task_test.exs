@@ -10,13 +10,15 @@ defmodule MixTestWatch.GenTaskTest do
   import ExUnit.CaptureIO
 
   test "tasks can be run multiple times" do
-    io = capture_io(fn ->
-      GenTask.run("hello_world", [])
-      GenTask.run("hello_world", [])
-    end)
+    io =
+      capture_io(fn ->
+        GenTask.run("hello_world", [])
+        GenTask.run("hello_world", [])
+      end)
+
     assert io == """
-    Hello, world!
-    Hello, world!
-    """
+           Hello, world!
+           Hello, world!
+           """
   end
 end

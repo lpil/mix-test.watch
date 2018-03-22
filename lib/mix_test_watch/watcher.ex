@@ -4,6 +4,8 @@ defmodule MixTestWatch.Watcher do
   alias MixTestWatch, as: MTW
   alias MixTestWatch.Config
 
+  require Logger
+
   @moduledoc """
   A server that runs tests whenever source files change.
   """
@@ -27,8 +29,17 @@ defmodule MixTestWatch.Watcher do
   @spec init(String.t()) :: {:ok, %{args: String.t()}}
 
   def init(_) do
-    :ok = :fs.subscribe()
-    {:ok, []}
+    opts = [dirs: [Path.absname("")], name: :mix_test_watcher]
+    case FileSystem.start_link(opts) do
+      {:ok, _} ->
+        FileSystem.subscribe(:mix_test_watcher)
+        {:ok, []}
+      other ->
+        Logger.warn """
+        Could not start the file system monitor.
+        """
+        other
+    end
   end
 
   def handle_cast(:run_tasks, state) do
@@ -37,7 +48,7 @@ defmodule MixTestWatch.Watcher do
     {:noreply, state}
   end
 
-  def handle_info({_pid, {:fs, :file_event}, {path, _event}}, state) do
+  def handle_info({:file_event, _, {path, _events}}, state) do
     config = get_config()
     path = to_string(path)
 

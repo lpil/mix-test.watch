@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v0.6.0 - 2018-03-27
+
+- Switch from `fs` to `file_system` for file system event watching.
+
 ## v0.5.0 - 2017-08-26
 
 - Windows support (Rustam @rustamtolipov)

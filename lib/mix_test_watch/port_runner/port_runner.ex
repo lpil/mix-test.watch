@@ -9,15 +9,8 @@ defmodule MixTestWatch.PortRunner do
   Run tests using the runner from the config.
   """
   def run(%Config{} = config) do
-    command = build_tasks_cmds(config)
-
-    case :os.type() do
-      {:win32, _} ->
-        System.cmd("cmd", ["/C", "set MIX_ENV=test&& mix test"], into: IO.stream(:stdio, :line))
-
-      _ ->
-        System.cmd("sh", ["-c", command], into: IO.stream(:stdio, :line))
-    end
+    {command, args} = build_tasks_cmds(:os.type(), config)
+    System.cmd(command, args, into: IO.stream(:stdio, :line))
 
     :ok
   end
@@ -28,21 +21,41 @@ defmodule MixTestWatch.PortRunner do
   Colour is forced on- normally Elixir would not print ANSI colours while
   running inside a port.
   """
-  def build_tasks_cmds(config = %Config{}) do
-    config.tasks
-    |> Enum.map(&task_command(&1, config))
-    |> Enum.join(" && ")
+  def build_tasks_cmds(os_type, config = %Config{}) do
+    {
+      command_for(os_type),
+      [
+        command_switch_for(os_type),
+        config.tasks
+        |> Enum.map(&task_command(os_type, &1, config))
+        |> Enum.join(" && ")
+      ]
+    }
   end
+
+  defp command_for({:win32, _}), do: "cmd"
+  defp command_for(_os_type), do: "sh"
+
+  defp command_switch_for({:win32, _}), do: "/c"
+  defp command_switch_for(_os_type), do: "-c"
+
+  defp set_mix_env_for({:win32, _}), do: "set MIX_ENV=test&&"
+  defp set_mix_env_for(_os_type), do: "MIX_ENV=test"
 
   @ansi "run --no-start -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
 
-  defp task_command(task, config) do
-    args = Enum.join(config.cli_args, " ")
+  defp ansi_command() do
+    if IO.ANSI.enabled?(), do: "do #{@ansi},"
+  end
 
-    [config.cli_executable, "do", @ansi <> ",", task, args]
+  defp task_command(os_type, task, config) do
+    [
+      set_mix_env_for(os_type),
+      config.cli_executable,
+      ansi_command(),
+      task
+    ] ++ config.cli_args
     |> Enum.filter(& &1)
     |> Enum.join(" ")
-    |> (fn command -> "MIX_ENV=test #{command}" end).()
-    |> String.trim()
   end
 end

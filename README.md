@@ -47,16 +47,14 @@ linter after my tests I would do so like this.
 [dogma]: https://github.com/lpil/dogma
 
 ```elixir
-# config/config.exs
+# config/dev.exs
 use Mix.Config
 
-if Mix.env == :dev do
-  config :mix_test_watch,
-    tasks: [
-      "test",
-      "dogma",
-    ]
-end
+config :mix_test_watch,
+  tasks: [
+    "test",
+    "dogma",
+  ]
 ```
 
 Tasks are run in the order they appear in the list, and the progression will
@@ -75,12 +73,12 @@ every time I save a file I could do so with this command:
 mix test.watch test/file/to_test.exs
 ```
 
-Note that if you have configured more than one task to be run these arguments
+Note that if you have configured more than one task to be run, these arguments
 will be passed to all the tasks run, not just the test command.
 
 ## Running tests of modules that changed
 
-Elixir 1.3 introduced `--stale` option that will run only those test files which reference modules that have changed since the last run. You can pass it to test.watch:
+Elixir 1.3 introduced `--stale` option, that will run only those test files which reference modules that have changed since the last run. You can pass it to test.watch:
 
 ```
 mix test.watch --stale
@@ -88,33 +86,29 @@ mix test.watch --stale
 
 ## Clearing The Console Before Each Run
 
-If you want mix test.watch to clear the console before each run, you can
-enable this option in your config/dev.exs as follows:
+If you want `mix test.watch` to clear the console before each run, you can
+enable this option in your `config/dev.exs` as follows:
 
 ```elixir
-# config/config.exs
+# config/dev.exs
 use Mix.Config
 
-if Mix.env == :dev do
-  config :mix_test_watch,
-    clear: true
-end
+config :mix_test_watch,
+  clear: true
 ```
 
 ## Excluding files or directories
 
 To ignore changes from specific files or directories just add `exclude:` regexp
-patterns to your config in `mix.exs`:
+patterns to your `config/dev.exs`:
 
 ```elixir
-# config/config.exs
+# config/dev.exs
 use Mix.Config
 
-if Mix.env == :dev do
-  config :mix_test_watch,
-    exclude: [~r/db_migration\/.*/,
-              ~r/useless_.*\.exs/]
-end
+config :mix_test_watch,
+  exclude: [~r/db_migration\/.*/,
+            ~r/useless_.*\.exs/]
 ```
 
 ## Compatibility Notes

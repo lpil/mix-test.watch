@@ -20,7 +20,7 @@ defmodule MixTestWatch.PortRunnerTest do
       refute is_nil(args)
       assert Enum.at(args, 0) === "/c"
       assert Enum.at(args, 1) =~ ~r(^set MIX_ENV=test)
-      assert Enum.at(args, 1) =~ ~r(mix test$)
+      assert Enum.at(args, 1) =~ ~r( test$)
     end
 
     test "builds the right command for non-windows" do
@@ -28,7 +28,7 @@ defmodule MixTestWatch.PortRunnerTest do
       refute is_nil(args)
       assert Enum.at(args, 0) === "-c"
       assert Enum.at(args, 1) =~ ~r(^MIX_ENV=test)
-      assert Enum.at(args, 1) =~ ~r(mix test$)
+      assert Enum.at(args, 1) =~ ~r( test$)
     end
 
     @tag ansi: true

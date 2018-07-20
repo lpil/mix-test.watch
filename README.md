@@ -117,6 +117,8 @@ if Mix.env == :dev do
 end
 ```
 
+The default is `exclude: [~r/\.#/, ~r{priv/repo/migrations}]`.
+
 ## Compatibility Notes
 
 On Linux you may need to install `inotify-tools`.

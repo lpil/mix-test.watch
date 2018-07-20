@@ -31,6 +31,11 @@ defmodule MixTestWatch.ConfigTest do
     assert ~r/\.#/ in config.exclude
   end
 
+  test ":exclude contains default Phoenix migrations directory by default" do
+    config = Config.new()
+    assert ~r{priv/repo/migrations} in config.exclude
+  end
+
   test "new/1 takes :extra_extensions from the env" do
     TemporaryEnv.set :mix_test_watch, extra_extensions: [".haml"] do
       config = Config.new()

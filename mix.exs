@@ -1,7 +1,7 @@
 defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
-  @version "0.7.0"
+  @version "0.8.0"
 
   def project do
     [
@@ -31,7 +31,7 @@ defmodule MixTestWatch.Mixfile do
     [
       {:file_system, "~> 0.2.1 or ~> 0.3"},
       # App env state test helper
-      {:temporary_env, "~> 1.0", only: :test},
+      {:temporary_env, "~> 2.0", only: :test},
       # Documentation generator
       {:ex_doc, ">= 0.12.0", only: :dev}
     ]

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v0.8.0 - Unreleased
+
+- Application started on test run. Revert of v0.7 behaviour.
+
 ## v0.7.0 - 2018-07-35
 
 - No longer start application on test run.

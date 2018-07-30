@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## v0.7.0 - 2018-07-35
+
+- No longer start application on test run.
+- Do not watch the Ecto migration directory by default.
+
 ## v0.6.0 - 2018-03-27
 
 - Switch from `fs` to `file_system` for file system event watching.

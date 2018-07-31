@@ -24,5 +24,16 @@ defmodule MixTestWatch.PortRunnerTest do
 
       assert PortRunner.build_tasks_cmds(config) == expected
     end
+
+    test "respect no-start commandline argument from passed config" do
+      config = %Config{cli_args: ["--exclude", "integration", "--no-start"]}
+
+      expected =
+        "MIX_ENV=test mix do run --no-start -e " <>
+          "'Application.put_env(:elixir, :ansi_enabled, true);', " <>
+          "test --exclude integration --no-start"
+
+      assert PortRunner.build_tasks_cmds(config) == expected
+    end
   end
 end

@@ -9,6 +9,11 @@ otp_release:
   - 20.0
   - 21.0
   
+matrix:
+  exclude:
+  - otp_release: 21.0
+    elixir: 1.5
+  
 env: MIX_ENV=test
 
 sudo: false # faster builds

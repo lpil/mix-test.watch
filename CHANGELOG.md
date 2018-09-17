@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## v0.9.0 - Unreleased
+## v0.9.0 - 2018-09-17
 
 - Avoid starting application if `--no-start` is given.
 - Hot runner removed.

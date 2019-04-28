@@ -13,7 +13,7 @@ defmodule MixTestWatch.PortRunner do
 
     case :os.type() do
       {:win32, _} ->
-        System.cmd("cmd", ["/C", "set MIX_ENV=test&& mix test"], into: IO.stream(:stdio, :line))
+        System.cmd("cmd", ["/C", command], into: IO.stream(:stdio, :line))
 
       _ ->
         System.cmd("sh", ["-c", command], into: IO.stream(:stdio, :line))
@@ -39,14 +39,32 @@ defmodule MixTestWatch.PortRunner do
 
     ansi =
       case Enum.member?(config.cli_args, "--no-start") do
-        true -> "run --no-start -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
-        false -> "run -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
+        true ->
+          "run --no-start -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
+
+        false ->
+          case :os.type() do
+            {:win32, _} ->
+              ~s(run -e "Application.put_env :elixir, :ansi_enabled, true;")
+
+            _ ->
+              "run -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
+          end
       end
 
-    [config.cli_executable, "do", ansi <> ",", task, args]
+    IO.inspect(ansi <> ",")
+
+    [config.cli_executable, "do", ansi <> " ,", task, args]
     |> Enum.filter(& &1)
     |> Enum.join(" ")
-    |> (fn command -> "MIX_ENV=test #{command}" end).()
+    |> set_env_var()
     |> String.trim()
+  end
+
+  defp set_env_var(command) do
+    case :os.type() do
+      {:win32, _} -> "set MIX_ENV=test&& #{command}"
+      _ -> "MIX_ENV=test #{command}"
+    end
   end
 end

@@ -45,14 +45,13 @@ defmodule MixTestWatch.PortRunner do
         false ->
           case :os.type() do
             {:win32, _} ->
-              ~s(run -e "Application.put_env :elixir, :ansi_enabled, true;")
+              # ~s(run -e Application.put_env\(:elixir, :ansi_enabled, true\) )
+              "run -e \"\""
 
             _ ->
               "run -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
           end
       end
-
-    IO.inspect(ansi <> ",")
 
     [config.cli_executable, "do", ansi <> " ,", task, args]
     |> Enum.filter(& &1)

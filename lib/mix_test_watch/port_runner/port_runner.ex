@@ -34,6 +34,9 @@ defmodule MixTestWatch.PortRunner do
     |> Enum.join(" && ")
   end
 
+  defp task_command({task, :ignore_cli_args}, config),
+    do: task_command(task, %{config | cli_args: []})
+
   defp task_command(task, config) do
     args = Enum.join(config.cli_args, " ")
 

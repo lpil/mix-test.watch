@@ -15,6 +15,38 @@ defmodule MixTestWatch.PortRunnerTest do
       assert PortRunner.build_tasks_cmds(config) == expected
     end
 
+    test "ignores cli_args if task has :ignore_cli_args in definition" do
+      config = %Config{
+        cli_args: ["--exclude", "integration"],
+        tasks: [{"test", :ignore_cli_args}]
+      }
+
+      expected =
+        "MIX_ENV=test mix do run -e " <>
+          "'Application.put_env(:elixir, :ansi_enabled, true);', " <> "test"
+
+      assert PortRunner.build_tasks_cmds(config) == expected
+    end
+
+    test "ignores cli_args for with specific key in task" do
+      config = %Config{
+        cli_args: ["--exclude", "integration"],
+        tasks: [{"test", :ignore_cli_args}, "dogma"]
+      }
+
+      first_task_expected =
+        "MIX_ENV=test mix do run -e " <>
+          "'Application.put_env(:elixir, :ansi_enabled, true);', " <>
+          "test "
+
+      second_task_expected =
+        "MIX_ENV=test mix do run -e 'Application.put_env(:elixir, :ansi_enabled, true);', " <>
+          "dogma --exclude integration"
+
+      expected = first_task_expected <> "&& " <> second_task_expected
+      assert PortRunner.build_tasks_cmds(config) == expected
+    end
+
     test "take the command cli_executable from passed config" do
       config = %Config{cli_executable: "iex -S mix"}
 

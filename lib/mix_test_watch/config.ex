@@ -26,42 +26,16 @@ defmodule MixTestWatch.Config do
   """
   def new(cli_args \\ []) do
     %__MODULE__{
-      tasks: get_tasks(),
-      clear: get_clear(),
-      timestamp: get_timestamp(),
-      runner: get_runner(),
-      exclude: get_excluded(),
-      cli_executable: get_cli_executable(),
+      tasks: get_config(:tasks, @default_tasks),
+      clear: get_config(:clear, @default_clear),
+      timestamp: get_config(:timestamp, @default_timestamp),
+      runner: get_config(:runner, @default_runner),
+      exclude: get_config(:exclude, @default_exclude),
+      cli_executable: get_config(:cli_executable, @default_cli_executable),
       cli_args: cli_args,
-      extra_extensions: get_extra_extensions()
+      extra_extensions: get_config(:extra_extensions, @default_extra_extensions)
     }
   end
 
-  defp get_runner do
-    Application.get_env(:mix_test_watch, :runner, @default_runner)
-  end
-
-  defp get_tasks do
-    Application.get_env(:mix_test_watch, :tasks, @default_tasks)
-  end
-
-  defp get_clear do
-    Application.get_env(:mix_test_watch, :clear, @default_clear)
-  end
-
-  defp get_timestamp do
-    Application.get_env(:mix_test_watch, :timestamp, @default_timestamp)
-  end
-
-  defp get_excluded do
-    Application.get_env(:mix_test_watch, :exclude, @default_exclude)
-  end
-
-  defp get_cli_executable do
-    Application.get_env(:mix_test_watch, :cli_executable, @default_cli_executable)
-  end
-
-  defp get_extra_extensions do
-    Application.get_env(:mix_test_watch, :extra_extensions, @default_extra_extensions)
-  end
+  defp get_config(key, default), do: Application.get_env(:mix_test_watch, key, default)
 end

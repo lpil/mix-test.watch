@@ -18,7 +18,7 @@ defmodule MixTestWatch.PortRunnerTest do
     test "ignores cli_args if task has :ignore_cli_args in definition" do
       config = %Config{
         cli_args: ["--exclude", "integration"],
-        tasks: [{"test", :ignore_cli_args}]
+        tasks: [{"test", [ignore_cli_args: true]}]
       }
 
       expected =
@@ -28,10 +28,23 @@ defmodule MixTestWatch.PortRunnerTest do
       assert PortRunner.build_tasks_cmds(config) == expected
     end
 
+    test "uses specific env if it is present in task definition" do
+      config = %Config{
+        cli_args: [],
+        tasks: [{"test", [env: "dev"]}]
+      }
+
+      expected =
+        "MIX_ENV=dev mix do run -e " <>
+          "'Application.put_env(:elixir, :ansi_enabled, true);', " <> "test"
+
+      assert PortRunner.build_tasks_cmds(config) == expected
+    end
+
     test "ignores cli_args for with specific key in task" do
       config = %Config{
         cli_args: ["--exclude", "integration"],
-        tasks: ["test", {"credo", :ignore_cli_args}]
+        tasks: ["test", {"credo", [ignore_cli_args: true]}]
       }
 
       first_task_expected =

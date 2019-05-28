@@ -1,4 +1,8 @@
 defmodule MixTestWatch.PortRunner do
+  @default_ignore_cli_args false
+  @default_env "test"
+  @default_task_opts [ignore_cli_args: @default_ignore_cli_args, env: @default_env]
+
   @moduledoc """
   Run the tasks in a new OS process via ports
   """
@@ -34,11 +38,16 @@ defmodule MixTestWatch.PortRunner do
     |> Enum.join(" && ")
   end
 
-  defp task_command({task, :ignore_cli_args}, config),
-    do: task_command(task, %{config | cli_args: []})
+  defp task_command(task, config) when is_bitstring(task),
+    do: task_command({task, @default_task_opts}, config)
 
-  defp task_command(task, config) do
-    args = Enum.join(config.cli_args, " ")
+  defp task_command({task, opts}, config) do
+    args =
+      if Keyword.get(opts, :ignore_cli_args, @default_ignore_cli_args),
+        do: [],
+        else: Enum.join(config.cli_args, " ")
+
+    env = Keyword.get(opts, :env, @default_env)
 
     ansi =
       case Enum.member?(config.cli_args, "--no-start") do
@@ -49,7 +58,7 @@ defmodule MixTestWatch.PortRunner do
     [config.cli_executable, "do", ansi <> ",", task, args]
     |> Enum.filter(& &1)
     |> Enum.join(" ")
-    |> (fn command -> "MIX_ENV=test #{command}" end).()
+    |> (fn command -> "MIX_ENV=#{env} #{command}" end).()
     |> String.trim()
   end
 end

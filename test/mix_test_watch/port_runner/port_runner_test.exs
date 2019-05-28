@@ -31,19 +31,19 @@ defmodule MixTestWatch.PortRunnerTest do
     test "ignores cli_args for with specific key in task" do
       config = %Config{
         cli_args: ["--exclude", "integration"],
-        tasks: [{"test", :ignore_cli_args}, "dogma"]
+        tasks: ["test", {"credo", :ignore_cli_args}]
       }
 
       first_task_expected =
         "MIX_ENV=test mix do run -e " <>
           "'Application.put_env(:elixir, :ansi_enabled, true);', " <>
-          "test "
+          "test --exclude integration"
 
       second_task_expected =
         "MIX_ENV=test mix do run -e 'Application.put_env(:elixir, :ansi_enabled, true);', " <>
-          "dogma --exclude integration"
+          "credo"
 
-      expected = first_task_expected <> "&& " <> second_task_expected
+      expected = first_task_expected <> " && " <> second_task_expected
       assert PortRunner.build_tasks_cmds(config) == expected
     end
 

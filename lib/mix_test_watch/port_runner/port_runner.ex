@@ -16,7 +16,8 @@ defmodule MixTestWatch.PortRunner do
         System.cmd("cmd", ["/C", "set MIX_ENV=test&& mix test"], into: IO.stream(:stdio, :line))
 
       _ ->
-        System.cmd("sh", ["-c", command], into: IO.stream(:stdio, :line))
+        Path.join(:code.priv_dir(:mix_test_watch), "zombie_killer")
+        |> System.cmd(["sh", "-c", command], into: IO.stream(:stdio, :line))
     end
 
     :ok

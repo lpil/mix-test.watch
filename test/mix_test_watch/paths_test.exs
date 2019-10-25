@@ -16,6 +16,10 @@ defmodule MixTestWatch.PathTest do
     assert watching?("foo.eex")
   end
 
+  test ".leex files are watched" do
+    assert watching?("foo.leex")
+  end
+
   test ".erl files are watched" do
     assert watching?("foo.erl")
   end

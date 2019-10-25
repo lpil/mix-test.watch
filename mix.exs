@@ -1,7 +1,7 @@
 defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
-  @version "1.0.0"
+  @version "1.0.1"
 
   def project do
     [
@@ -17,7 +17,7 @@ defmodule MixTestWatch.Mixfile do
         maintainers: ["Louis Pilfold"],
         licenses: ["MIT"],
         links: %{"GitHub" => "https://github.com/lpil/mix-test.watch"},
-        files: ~w(LICENCE README.md lib mix.exs)
+        files: ~w(LICENCE README.md CHANGELOG.md lib priv mix.exs)
       ]
     ]
   end

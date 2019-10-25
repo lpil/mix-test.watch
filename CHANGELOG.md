@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v1.0.0 - 2019-10-25
+
+- LiveView templates are now watched.
+
 ## v0.9.0 - 2018-09-17
 
 - Avoid starting application if `--no-start` is given.

@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## v1.0.0 - 2019-10-25
+## v1.0.1 - 2019-10-25
 
 - Include zombie killer script in hex package.
 

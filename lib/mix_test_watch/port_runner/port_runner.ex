@@ -17,7 +17,7 @@ defmodule MixTestWatch.PortRunner do
 
       _ ->
         Path.join(:code.priv_dir(:mix_test_watch), "zombie_killer")
-        |> System.cmd(["sh", "-c", command], into: IO.stream(:stdio, :line))
+        |> System.cmd(["sh", "-c", "'" <> command <> "'"], into: IO.stream(:stdio, :line))
     end
 
     :ok
@@ -40,8 +40,8 @@ defmodule MixTestWatch.PortRunner do
 
     ansi =
       case Enum.member?(config.cli_args, "--no-start") do
-        true -> "run --no-start -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
-        false -> "run -e 'Application.put_env(:elixir, :ansi_enabled, true);'"
+        true -> "run --no-start -e \"Application.put_env(:elixir, :ansi_enabled, true);\""
+        false -> "run -e \"Application.put_env(:elixir, :ansi_enabled, true);\""
       end
 
     [config.cli_executable, "do", ansi <> ",", task, args]

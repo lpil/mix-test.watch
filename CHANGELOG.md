@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## v1.0.2 - 2019-11-17
+
+- Zombie killer script is run with bash to avoid platform specific issues with
+  sh implementations.
+
 ## v1.0.1 - 2019-10-25
 
 - Include zombie killer script in hex package.

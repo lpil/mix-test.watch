@@ -126,6 +126,9 @@ On Linux you may need to install `inotify-tools`.
 You can enable desktop notifications with
 [ex_unit_notifier](https://github.com/navinpeiris/ex_unit_notifier).
 
+## Alternatives
+
+[mix_test_interactive](https://github.com/influxdata/mix_test_interactive) is based on `mix test.watch` but adds an interactive mode that allows you to dynamically change which tests to run.
 
 ## Licence
 

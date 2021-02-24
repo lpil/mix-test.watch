@@ -2,32 +2,46 @@ mix test.watch
 ==============
 
 [![Build Status](https://travis-ci.org/lpil/mix-test.watch.svg?branch=master)](https://travis-ci.org/lpil/mix-test.watch)
-[![Hex version](https://img.shields.io/hexpm/v/mix_test_watch.svg "Hex version")](https://hex.pm/packages/mix_test_watch)
-[![Hex downloads](https://img.shields.io/hexpm/dt/mix_test_watch.svg "Hex downloads")](https://hex.pm/packages/mix_test_watch)
+[![Module Version](https://img.shields.io/hexpm/v/mix_test_watch.svg)](https://hex.pm/packages/mix_test_watch)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/mix_test_watch/)
+[![Total Download](https://img.shields.io/hexpm/dt/mix_test_watch.svg)](https://hex.pm/packages/mix_test_watch)
+[![License](https://img.shields.io/hexpm/l/mix_test_watch.svg)](https://github.com/lpil/mix-test.watch/blob/master/LICENSE)
+[![Last Updated](https://img.shields.io/github/last-commit/lpil/mix-test.watch.svg)](https://github.com/lpil/mix-test.watch/commits/master)
 
 Automatically run your Elixir project's tests each time you save a file.
-Because TDD is awesome.
+
+Because [Test-driven development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development)
+is awesome.
 
 
 ## Usage
 
 Add it to your dependencies:
 
+For [Elixir 1.4](https://github.com/elixir-lang/elixir/blob/v1.4/CHANGELOG.md#application-inference)
+onwards:
+
 ```elixir
-# mix.exs (Elixir 1.4)
+# mix.exs
 def deps do
-  [{:mix_test_watch, "~> 1.0", only: :dev, runtime: false}]
+  [
+    {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
+  ]
 end
 ```
 
+For Elixir 1.3 and earlier:
+
 ```elixir
-# mix.exs (Elixir 1.3 and earlier)
+# mix.exs
 def deps do
-  [{:mix_test_watch, "~> 1.0", only: :dev}]
+  [
+    {:mix_test_watch, "~> 1.0", only: :dev}
+  ]
 end
 ```
 
-Run the mix task
+Run the mix task:
 
 ```
 mix test.watch
@@ -87,7 +101,7 @@ mix test.watch --stale
 ## Clearing The Console Before Each Run
 
 If you want mix test.watch to clear the console before each run, you can
-enable this option in your config/dev.exs as follows:
+enable this option in your `config/dev.exs` as follows:
 
 ```elixir
 # config/config.exs
@@ -130,11 +144,11 @@ You can enable desktop notifications with
 
 [mix_test_interactive](https://github.com/influxdata/mix_test_interactive) is based on `mix test.watch` but adds an interactive mode that allows you to dynamically change which tests to run.
 
-## Licence
+## Copyright and Licence
 
-```
 mix test.watch
-Copyright © 2015-present Louis Pilfold
+
+Copyright © 2015 Louis Pilfold
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -153,4 +167,3 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```

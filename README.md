@@ -116,7 +116,7 @@ end
 ## Excluding files or directories
 
 To ignore changes from specific files or directories just add `exclude:` regexp
-patterns to your config in `mix.exs`:
+patterns to your config in `config/config.exs`:
 
 ```elixir
 # config/config.exs

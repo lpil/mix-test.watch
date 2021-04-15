@@ -131,6 +131,20 @@ end
 
 The default is `exclude: [~r/\.#/, ~r{priv/repo/migrations}]`.
 
+## Watching files with other extensions
+
+To watch files with extensions other than the default (`.erl`, `.ex`, `.exs`, `.eex`, `.leex`, `.xrl`, `.yrl`, `.hrl`) add them to  `extra_extensions:` in your config:
+
+```elixir
+# config/config.exs
+use Mix.Config
+
+if Mix.env == :dev do
+  config :mix_test_watch,
+    extra_extensions: [".rs"]
+end
+```
+
 ## Compatibility Notes
 
 On Linux you may need to install `inotify-tools`.

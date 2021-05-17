@@ -26,10 +26,8 @@ defmodule MixTestWatch do
   #
 
   def start(_type, _args) do
-    import Supervisor.Spec, warn: false
-
     children = [
-      worker(Watcher, [])
+      Watcher
     ]
 
     opts = [strategy: :one_for_one, name: Sup.Supervisor]

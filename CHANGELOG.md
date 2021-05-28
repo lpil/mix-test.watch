@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v1.0.3 - 2021-05-28
+
+- Removed used of deprecated Elixir supervisor functions.
+
 ## v1.0.2 - 2019-11-17
 
 - Zombie killer script is run with bash to avoid platform specific issues with

@@ -2,7 +2,7 @@ defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
   @source_url "https://github.com/lpil/mix-test.watch"
-  @version "1.0.2"
+  @version "1.0.3"
 
   def project do
     [
@@ -14,6 +14,7 @@ defmodule MixTestWatch.Mixfile do
       deps: deps(),
       docs: docs(),
       name: "mix test.watch",
+      xref: [exclude: [IEx]],
       description: "Automatically run tests when files change",
       package: [
         maintainers: ["Louis Pilfold"],

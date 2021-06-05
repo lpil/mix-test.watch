@@ -2,6 +2,8 @@ defmodule MixTestWatch.Runner do
   @moduledoc false
 
   alias MixTestWatch.Config
+  
+  @clear_ansi_escape_sequence "\x1bc"
 
   #
   # Behaviour specification
@@ -29,7 +31,7 @@ defmodule MixTestWatch.Runner do
   #
 
   defp maybe_clear_terminal(%{clear: false}), do: :ok
-  defp maybe_clear_terminal(%{clear: true}), do: :ok = IO.puts(IO.ANSI.clear() <> IO.ANSI.home())
+  defp maybe_clear_terminal(%{clear: true}), do: :ok = IO.puts(@clear_ansi_escape_sequence)
 
   defp maybe_print_timestamp(%{timestamp: false}), do: :ok
 

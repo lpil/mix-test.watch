@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v1.1.0 - 2021-08-30
+
+- `.heex` files are now watched by default.
+
 ## v1.0.3 - 2021-05-28
 
 - Removed used of deprecated Elixir supervisor functions.

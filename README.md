@@ -25,7 +25,7 @@ onwards:
 # mix.exs
 def deps do
   [
-    {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
+    {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
   ]
 end
 ```
@@ -36,7 +36,23 @@ For Elixir 1.3 and earlier:
 # mix.exs
 def deps do
   [
-    {:mix_test_watch, "~> 1.0", only: :dev}
+    {:mix_test_watch, "~> 1.0", only: [:dev, :test]}
+  ]
+end
+```
+
+Optionally, add `preferred_cli_env: ["test.watch": :test]` for running `mix test.watch` in `:test` env by default.
+It prevents the task from running `:dev` env config scripts.
+
+```elixir
+# mix.exs
+def project do
+  [
+    ...
+    preferred_cli_env: [
+      "test.watch": :test
+    ],
+    ...
   ]
 end
 ```

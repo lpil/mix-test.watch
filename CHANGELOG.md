@@ -95,5 +95,5 @@ Changelog
 ## v0.2.2 - 2015-08-22
 
 - Tests now run once immediately after running the mix task. (Johan Lind @behe)
-- Porcelain dependancy removed.
+- Porcelain dependency removed.
 - Switched from bash to sh for running shell commands.

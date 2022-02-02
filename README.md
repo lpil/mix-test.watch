@@ -1,5 +1,4 @@
-mix test.watch
-==============
+# mix test.watch
 
 [![Build Status](https://travis-ci.org/lpil/mix-test.watch.svg?branch=master)](https://travis-ci.org/lpil/mix-test.watch)
 [![Module Version](https://img.shields.io/hexpm/v/mix_test_watch.svg)](https://hex.pm/packages/mix_test_watch)
@@ -12,7 +11,6 @@ Automatically run your Elixir project's tests each time you save a file.
 
 Because [Test-driven development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development)
 is awesome.
-
 
 ## Usage
 
@@ -65,7 +63,6 @@ mix test.watch
 
 Start hacking :)
 
-
 ## Running Additional Mix Tasks
 
 Through the mix config it is possible to run other mix tasks as well as the
@@ -91,7 +88,6 @@ Tasks are run in the order they appear in the list, and the progression will
 stop if any command returns a non-zero exit code.
 
 All tasks are run with `MIX_ENV` set to `test`.
-
 
 ## Passing Arguments To Tasks
 
@@ -149,7 +145,7 @@ The default is `exclude: [~r/\.#/, ~r{priv/repo/migrations}]`.
 
 ## Watching files with other extensions
 
-To watch files with extensions other than the default (`.erl`, `.ex`, `.exs`, `.eex`, `.leex`, `.xrl`, `.yrl`, `.hrl`) add them to  `extra_extensions:` in your config:
+To watch files with extensions other than the default (`.erl`, `.ex`, `.exs`, `.eex`, `.leex`, `.heex`, `.xrl`, `.yrl`, `.hrl`) add them to `extra_extensions:` in your config:
 
 ```elixir
 # config/config.exs

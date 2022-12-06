@@ -66,10 +66,10 @@ Start hacking :)
 ## Running Additional Mix Tasks
 
 Through the mix config it is possible to run other mix tasks as well as the
-test task. For example, if I wished to run the [Dogma][dogma] code style
-linter after my tests I would do so like this.
+test task. For example, if I wished to run the [Credo][credo] code analysis
+tool after my tests I would do so like this.
 
-[dogma]: https://github.com/lpil/dogma
+[credo]: https://github.com/rrrene/credo
 
 ```elixir
 # config/config.exs
@@ -79,7 +79,7 @@ if Mix.env == :dev do
   config :mix_test_watch,
     tasks: [
       "test",
-      "dogma",
+      "credo",
     ]
 end
 ```

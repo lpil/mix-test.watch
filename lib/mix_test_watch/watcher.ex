@@ -35,9 +35,7 @@ defmodule MixTestWatch.Watcher do
         FileSystem.subscribe(:mix_test_watcher)
         {:ok, []}
       other ->
-        Logger.warn """
-        Could not start the file system monitor.
-        """
+        Logger.warning("Could not start the file system monitor.")
         other
     end
   end

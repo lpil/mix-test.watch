@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v1.1.1 - 2023-09-02
+
+- Fixed warning on Elixir v1.15.5.
+
 ## v1.1.0 - 2021-08-30
 
 - `.heex` files are now watched by default.

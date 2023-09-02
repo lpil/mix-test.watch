@@ -12,7 +12,7 @@ defmodule MixTestWatch.Path do
   # Public API
   #
 
-  @spec watching?(MixTestWatch.Config.t(), String.t()) :: boolean
+  @spec watching?(String.t(), MixTestWatch.Config.t()) :: boolean
 
   def watching?(path, config \\ %Config{}) do
     watched_directory?(path) and elixir_extension?(path, config.extra_extensions) and

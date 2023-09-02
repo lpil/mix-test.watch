@@ -26,14 +26,16 @@ defmodule MixTestWatch.Watcher do
   # Genserver callbacks
   #
 
-  @spec init(String.t()) :: {:ok, %{args: String.t()}}
+  @spec init(String.t()) :: {:ok, Keyword.t()}
 
   def init(_) do
     opts = [dirs: [Path.absname("")], name: :mix_test_watcher]
+
     case FileSystem.start_link(opts) do
       {:ok, _} ->
         FileSystem.subscribe(:mix_test_watcher)
         {:ok, []}
+
       other ->
         Logger.warning("Could not start the file system monitor.")
         other

@@ -32,7 +32,7 @@ defmodule MixTestWatch.PortRunner do
   def build_tasks_cmds(config = %Config{}) do
     config.tasks
     |> Enum.map(&task_command(&1, config))
-    |> Enum.join(" && ")
+    |> Enum.join(" ; ")
   end
 
   defp task_command(task, config) do

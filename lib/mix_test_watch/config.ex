@@ -9,7 +9,7 @@ defmodule MixTestWatch.Config do
   @default_timestamp false
   @default_exclude [~r/\.#/, ~r{priv/repo/migrations}]
   @default_extra_extensions []
-  @default_cli_executable "mix"
+  @default_cli_executable ~s(elixir --erl "-elixir ansi_enabled true" -S mix)
 
   defstruct tasks: @default_tasks,
             clear: @default_clear,

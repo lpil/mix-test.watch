@@ -26,7 +26,7 @@ defmodule MixTestWatch.Watcher do
   # Genserver callbacks
   #
 
-  @spec init(String.t()) :: {:ok, Keyword.t()}
+  @spec init(String.t()) :: {:ok, Task.t()}
 
   def init(_) do
     opts = [dirs: [Path.absname("")], name: :mix_test_watcher]
@@ -34,7 +34,7 @@ defmodule MixTestWatch.Watcher do
     case FileSystem.start_link(opts) do
       {:ok, _} ->
         FileSystem.subscribe(:mix_test_watcher)
-        {:ok, []}
+        {:ok, Task.completed(:ok)}
 
       other ->
         Logger.warning("Could not start the file system monitor.")
@@ -42,21 +42,38 @@ defmodule MixTestWatch.Watcher do
     end
   end
 
-  def handle_cast(:run_tasks, state) do
+  def handle_cast(:run_tasks, prev) do
     config = get_config()
-    MTW.Runner.run(config)
-    {:noreply, state}
+
+    Logger.info("Received :run_tasks message, restarting tasks...")
+    next = respawn(prev, config)
+
+    {:noreply, next}
   end
 
-  def handle_info({:file_event, _, {path, _events}}, state) do
+  def handle_info({:file_event, _, {path, _events}}, prev) do
     config = get_config()
     path = to_string(path)
 
-    if MTW.Path.watching?(path, config) do
-      MTW.Runner.run(config)
-      MTW.MessageInbox.flush()
-    end
+    next =
+      if MTW.Path.watching?(path, config) do
+        Logger.info("File #{path}")
+        Logger.info("Received :file_event message, restarting tasks...")
+        next = respawn(prev, config)
+        MTW.MessageInbox.flush()
+        next
+      else
+        prev
+      end
 
+    {:noreply, next}
+  end
+
+  def handle_info({ref, _}, state) when is_reference(ref) do
+    {:noreply, state}
+  end
+
+  def handle_info({:DOWN, ref, :process, _, _}, state) when is_reference(ref) do
     {:noreply, state}
   end
 
@@ -68,5 +85,11 @@ defmodule MixTestWatch.Watcher do
 
   defp get_config do
     Application.get_env(:mix_test_watch, :__config__, %Config{})
+  end
+
+  @spec respawn(Task.t(), %Config{}) :: Task.t()
+  defp respawn(prev, config) do
+    Task.shutdown(prev, :brutal_kill)
+    Task.async(fn -> MTW.Runner.run(config) end)
   end
 end

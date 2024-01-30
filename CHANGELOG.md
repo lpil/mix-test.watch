@@ -1,5 +1,10 @@
-Changelog
-=========
+# Changelog
+
+## v1.1.2 - 2024-30-01
+
+- `MixTestWatch.Watcher` runs tasks asynchronously.
+- `MixTestWatch.Watcher` restarts tasks upon detecting watched events.
+- `MixTestWatch.Watcher` logging the reason of tasks restarts.
 
 ## v1.1.1 - 2023-09-02
 

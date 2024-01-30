@@ -1,5 +1,8 @@
-Changelog
-=========
+# Changelog
+
+## v1.1.2 - 2024-01-30
+
+- Fixed terminal output text not always being displayed with colors.
 
 ## v1.1.1 - 2023-09-02
 

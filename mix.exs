@@ -38,7 +38,7 @@ defmodule MixTestWatch.Mixfile do
   defp deps do
     [
       # File system event watcher
-      {:file_system, "~> 0.2.1 or ~> 0.3"},
+      {:file_system, "~> 0.2 or ~> 1.0"},
       # App env state test helper
       {:temporary_env, "~> 2.0", only: :test},
       # Documentation generator

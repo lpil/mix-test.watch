@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0 - 2024-03-05
+
+- Relaxed the `file_system` dependency to allow for v1.x.
+
 ## v1.1.2 - 2024-02-08
 
 - Fixed terminal output text not always being displayed with colors.

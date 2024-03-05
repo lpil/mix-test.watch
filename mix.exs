@@ -2,7 +2,7 @@ defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
   @source_url "https://github.com/lpil/mix-test.watch"
-  @version "1.1.2"
+  @version "1.2.0"
 
   def project do
     [

@@ -5,6 +5,7 @@ defmodule MixTestWatch.Config do
 
   @default_runner MixTestWatch.PortRunner
   @default_tasks ~w(test)
+  @default_env :test
   @default_clear false
   @default_timestamp false
   @default_exclude [~r/\.#/, ~r{priv/repo/migrations}]
@@ -18,7 +19,8 @@ defmodule MixTestWatch.Config do
             exclude: @default_exclude,
             extra_extensions: @default_extra_extensions,
             cli_executable: @default_cli_executable,
-            cli_args: []
+            cli_args: [],
+            mix_env: @default_env
 
   @spec new([String.t()]) :: %__MODULE__{}
   @doc """
@@ -33,8 +35,13 @@ defmodule MixTestWatch.Config do
       exclude: get_excluded(),
       cli_executable: get_cli_executable(),
       cli_args: cli_args,
-      extra_extensions: get_extra_extensions()
+      extra_extensions: get_extra_extensions(),
+      mix_env: get_mix_env()
     }
+  end
+
+  defp get_mix_env do
+    Application.get_env(:mix_test_watch, :mix_env, @default_env)
   end
 
   defp get_runner do

@@ -8,9 +8,7 @@ defmodule MixTestWatch.PortRunnerTest do
     test "appends commandline arguments from passed config" do
       config = %Config{cli_args: ["--exclude", "integration"]}
 
-      expected =
-        "MIX_ENV=test mix do run -e " <>
-          "'Application.put_env(:elixir, :ansi_enabled, true);', " <> "test --exclude integration"
+      expected = "ELIXIR_ERL_OPTIONS=\"-elixir ansi_enabled true\" mix test --exclude integration"
 
       assert PortRunner.build_tasks_cmds(config) == expected
     end
@@ -18,9 +16,7 @@ defmodule MixTestWatch.PortRunnerTest do
     test "take the command cli_executable from passed config" do
       config = %Config{cli_executable: "iex -S mix"}
 
-      expected =
-        "MIX_ENV=test iex -S mix do run -e " <>
-          "'Application.put_env(:elixir, :ansi_enabled, true);', test"
+      expected = "ELIXIR_ERL_OPTIONS=\"-elixir ansi_enabled true\" iex -S mix test"
 
       assert PortRunner.build_tasks_cmds(config) == expected
     end
@@ -29,8 +25,7 @@ defmodule MixTestWatch.PortRunnerTest do
       config = %Config{cli_args: ["--exclude", "integration", "--no-start"]}
 
       expected =
-        "MIX_ENV=test mix do run --no-start -e " <>
-          "'Application.put_env(:elixir, :ansi_enabled, true);', " <>
+        "ELIXIR_ERL_OPTIONS=\"-elixir ansi_enabled true\" mix " <>
           "test --exclude integration --no-start"
 
       assert PortRunner.build_tasks_cmds(config) == expected

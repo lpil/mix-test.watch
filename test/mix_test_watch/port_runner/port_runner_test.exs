@@ -1,6 +1,8 @@
 defmodule MixTestWatch.PortRunnerTest do
   use ExUnit.Case, async: true
 
+  import ExUnit.CaptureIO
+
   alias MixTestWatch.PortRunner
   alias MixTestWatch.Config
 
@@ -35,5 +37,11 @@ defmodule MixTestWatch.PortRunnerTest do
 
       assert PortRunner.build_tasks_cmds(config) == expected
     end
+  end
+
+  test "run/1 executes all tasks regardless of exit code" do
+    config = %Config{tasks: ["fail", "success"]}
+
+    assert capture_io(fn -> PortRunner.run(config) end) =~ "success"
   end
 end

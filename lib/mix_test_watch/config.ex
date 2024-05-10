@@ -6,6 +6,7 @@ defmodule MixTestWatch.Config do
   @default_runner MixTestWatch.PortRunner
   @default_tasks ~w(test)
   @default_clear false
+  @default_clear_scrollback false
   @default_timestamp false
   @default_exclude [~r/\.#/, ~r{priv/repo/migrations}]
   @default_extra_extensions []
@@ -13,6 +14,7 @@ defmodule MixTestWatch.Config do
 
   defstruct tasks: @default_tasks,
             clear: @default_clear,
+            clear_scrollback: @default_clear,
             timestamp: @default_timestamp,
             runner: @default_runner,
             exclude: @default_exclude,
@@ -28,6 +30,7 @@ defmodule MixTestWatch.Config do
     %__MODULE__{
       tasks: get_tasks(),
       clear: get_clear(),
+      clear_scrollback: get_clear_scrollback(),
       timestamp: get_timestamp(),
       runner: get_runner(),
       exclude: get_excluded(),
@@ -47,6 +50,10 @@ defmodule MixTestWatch.Config do
 
   defp get_clear do
     Application.get_env(:mix_test_watch, :clear, @default_clear)
+  end
+
+  defp get_clear_scrollback do
+    Application.get_env(:mix_test_watch, :clear_scrollback, @default_clear_scrollback)
   end
 
   defp get_timestamp do

@@ -16,25 +16,11 @@ is awesome.
 
 Add it to your dependencies:
 
-For [Elixir 1.4](https://github.com/elixir-lang/elixir/blob/v1.4/CHANGELOG.md#application-inference)
-onwards:
-
 ```elixir
 # mix.exs
 def deps do
   [
     {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
-  ]
-end
-```
-
-For Elixir 1.3 and earlier:
-
-```elixir
-# mix.exs
-def deps do
-  [
-    {:mix_test_watch, "~> 1.0", only: [:dev, :test]}
   ]
 end
 ```
@@ -104,7 +90,7 @@ will be passed to all the tasks run, not just the test command.
 
 ## Running tests of modules that changed
 
-Elixir 1.3 introduced `--stale` option that will run only those test files which reference modules that have changed since the last run. You can pass it to test.watch:
+Elixir's `mix test` provides a `--stale` option that will run only those test files which reference modules that have changed since the last run. You can pass it to test.watch:
 
 ```
 mix test.watch --stale

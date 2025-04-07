@@ -9,7 +9,7 @@ defmodule MixTestWatch.PortRunnerTest do
       config = %Config{cli_args: ["--exclude", "integration"]}
 
       expected =
-        "MIX_ENV=test mix do run -e " <>
+        "MIX_ENV=test elixir --erl \"-elixir ansi_enabled true\" -S mix do run -e " <>
           "'Application.put_env(:elixir, :ansi_enabled, true);', " <> "test --exclude integration"
 
       assert PortRunner.build_tasks_cmds(config) == expected
@@ -29,7 +29,7 @@ defmodule MixTestWatch.PortRunnerTest do
       config = %Config{cli_args: ["--exclude", "integration", "--no-start"]}
 
       expected =
-        "MIX_ENV=test mix do run --no-start -e " <>
+        "MIX_ENV=test elixir --erl \"-elixir ansi_enabled true\" -S mix do run --no-start -e " <>
           "'Application.put_env(:elixir, :ansi_enabled, true);', " <>
           "test --exclude integration --no-start"
 

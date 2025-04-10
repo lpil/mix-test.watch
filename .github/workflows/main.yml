@@ -5,16 +5,16 @@
 name: mix test.watch tests
 
 on:
-  # TODO: Decide what should trigger builds
-  # - push
-  - pull_request
+  push:
+    branches:
+      - master
+  pull_request: {}
 
 permissions:
   contents: read
 
 jobs:
   test:
-
     name: Test on OTP ${{matrix.otp}} + Elixir ${{matrix.elixir}}
     runs-on: ubuntu-latest
     strategy:
@@ -24,14 +24,15 @@ jobs:
         # elixir: ['1.14', '1.15', '1.16', '1.17', '1.18']
         otp: ['27']
         elixir: ['1.18']
-
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Elixir
       uses: erlef/setup-beam@v1.18.2
       with:
         otp-version: ${{matrix.otp}}
         elixir-version: ${{matrix.elixir}}
+
     - name: Restore dependencies cache
       uses: actions/cache@v4
       with:
@@ -39,9 +40,12 @@ jobs:
         key: ${{ runner.os }}-mix-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-mix-${{ matrix.otp }}-${{ matrix.elixir }}-
+
     - name: Install dependencies
       run: mix deps.get
+
     - name: Compile strict
       run: mix compile --warnings-as-errors
+
     - name: Run tests
       run: mix test

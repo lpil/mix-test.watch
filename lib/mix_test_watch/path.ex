@@ -27,7 +27,10 @@ defmodule MixTestWatch.Path do
 
   defp excluded?(config, path) do
     config.exclude
-    |> Enum.map(fn pattern -> Regex.match?(pattern, path) end)
+    |> Enum.map(fn
+      pattern when is_binary(pattern) -> pattern |> Regex.compile!() |> Regex.match?(path)
+      pattern -> Regex.match?(pattern, path)
+    end)
     |> Enum.any?()
   end
 

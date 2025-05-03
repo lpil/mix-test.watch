@@ -11,6 +11,7 @@ defmodule MixTestWatch.Mixfile do
       elixir: "~> 1.5",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps(),
       docs: docs(),
       name: "mix test.watch",
@@ -52,6 +53,13 @@ defmodule MixTestWatch.Mixfile do
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}"
+    ]
+  end
+
+  defp aliases do
+    [
+      fail: ["cmd false"],
+      success: ["cmd echo success"]
     ]
   end
 end

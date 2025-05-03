@@ -143,6 +143,18 @@ if Mix.env == :dev do
 end
 ```
 
+## Run tests with a custom mix environment
+
+```elixir
+# config/config.exs
+use Mix.Config
+
+if Mix.env == :dev do
+  config :mix_test_watch,
+    mix_env: :e2e
+end
+```
+
 ## Compatibility Notes
 
 On Linux you may need to install `inotify-tools`.

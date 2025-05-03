@@ -13,7 +13,9 @@ defmodule MixTestWatch.PortRunner do
 
     case :os.type() do
       {:win32, _} ->
-        System.cmd("cmd", ["/C", "set MIX_ENV=test&& mix test"], into: IO.stream(:stdio, :line))
+        System.cmd("cmd", ["/C", "set MIX_ENV=#{config.mix_env}&& mix test"],
+          into: IO.stream(:stdio, :line)
+        )
 
       _ ->
         Path.join(:code.priv_dir(:mix_test_watch), "zombie_killer")
@@ -47,7 +49,7 @@ defmodule MixTestWatch.PortRunner do
     [config.cli_executable, "do", ansi <> ",", task, args]
     |> Enum.filter(& &1)
     |> Enum.join(" ")
-    |> (fn command -> "MIX_ENV=test #{command}" end).()
+    |> (fn command -> "MIX_ENV=#{config.mix_env} #{command}" end).()
     |> String.trim()
   end
 end

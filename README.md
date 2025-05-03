@@ -111,6 +111,26 @@ if Mix.env == :dev do
 end
 ```
 
+If you also want mix test.watch to clear the scrollback buffer when clearing
+the console, you can enable this option in your `config/dev.exs` as follows:
+
+```elixir
+# config/config.exs
+use Mix.Config
+
+if Mix.env == :dev do
+  config :mix_test_watch,
+    clear: true,
+    clear_scrollback: :macos_terminal
+end
+```
+
+The options for `clear_scrollback` are:
+
+- `:macos_terminal`
+- `:macos_iterm2`
+- a binary representing an ANSI sequence such as `"\e[3J"`
+
 ## Excluding files or directories
 
 To ignore changes from specific files or directories just add `exclude:` regexp

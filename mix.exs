@@ -31,7 +31,7 @@ defmodule MixTestWatch.Mixfile do
   def application do
     [
       mod: {MixTestWatch, []},
-      applications: [:file_system]
+      extra_applications: [:file_system]
     ]
   end
 

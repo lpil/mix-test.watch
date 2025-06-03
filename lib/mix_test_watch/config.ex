@@ -7,7 +7,7 @@ defmodule MixTestWatch.Config do
   @default_tasks ~w(test)
   @default_clear false
   @default_timestamp false
-  @default_exclude ["\.#", "priv/repo/migrations"]
+  @default_exclude ["\\\.#", "priv/repo/migrations"]
   @default_extra_extensions []
   @default_cli_executable ~s(elixir --erl "-elixir ansi_enabled true" -S mix)
 
@@ -55,6 +55,10 @@ defmodule MixTestWatch.Config do
 
   defp get_excluded do
     Application.get_env(:mix_test_watch, :exclude, @default_exclude)
+    |> Enum.map(fn 
+      pattern when is_binary(pattern) -> Regex.compile!(pattern)
+      pattern = %Regex{} -> pattern
+    end)
   end
 
   defp get_cli_executable do

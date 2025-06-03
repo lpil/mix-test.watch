@@ -14,7 +14,7 @@ defmodule MixTestWatch.Path do
 
   @spec watching?(String.t(), MixTestWatch.Config.t()) :: boolean
 
-  def watching?(path, config \\ %Config{}) do
+  def watching?(path, config \\ Config.new()) do
     watched_directory?(path) and elixir_extension?(path, config.extra_extensions) and
       not excluded?(config, path)
   end

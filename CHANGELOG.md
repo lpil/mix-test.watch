@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.0 - 2025-06-03
+
+- Updated for OTP28.
+
 ## v1.2.0 - 2024-03-05
 
 - Relaxed the `file_system` dependency to allow for v1.x.

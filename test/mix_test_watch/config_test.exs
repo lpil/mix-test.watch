@@ -21,19 +21,19 @@ defmodule MixTestWatch.ConfigTest do
   test "new/1 takes :exclude from the env" do
     TemporaryEnv.put :mix_test_watch, :exclude, ["migration_.*"] do
       config = Config.new()
-      assert config.exclude == [~r"migration_.*"]
+      assert [%Regex{source: "migration_.*"}] = config.exclude
     end
   end
 
   test ":exclude contains common editor temp/swap files by default" do
     config = Config.new()
     # Emacs lock symlink
-    assert ~r"\.#" in config.exclude
+    assert Enum.any?(config.exclude, &match?(%Regex{source: "\\.#"}, &1))
   end
 
   test ":exclude contains default Ecto migrations directory by default" do
     config = Config.new()
-    assert ~r"priv/repo/migrations" in config.exclude
+    assert Enum.any?(config.exclude, &match?(%Regex{source: "priv/repo/migrations"}, &1))
   end
 
   test "new/1 takes :extra_extensions from the env" do

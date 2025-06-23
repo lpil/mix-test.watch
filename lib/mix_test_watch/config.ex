@@ -20,7 +20,18 @@ defmodule MixTestWatch.Config do
             cli_executable: @default_cli_executable,
             cli_args: []
 
-  @spec new([String.t()]) :: %__MODULE__{}
+  @type t :: %__MODULE__{
+          tasks: [String.t()],
+          clear: boolean(),
+          timestamp: boolean(),
+          runner: atom(),
+          exclude: [String.t()],
+          extra_extensions: [String.t()],
+          cli_executable: String.t(),
+          cli_args: [String.t()]
+        }
+
+  @spec new([String.t()]) :: t()
   @doc """
   Create a new config struct, taking values from the ENV
   """
@@ -31,9 +42,9 @@ defmodule MixTestWatch.Config do
       timestamp: get_timestamp(),
       runner: get_runner(),
       exclude: get_excluded(),
+      extra_extensions: get_extra_extensions(),
       cli_executable: get_cli_executable(),
-      cli_args: cli_args,
-      extra_extensions: get_extra_extensions()
+      cli_args: cli_args
     }
   end
 

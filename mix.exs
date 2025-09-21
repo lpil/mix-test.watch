@@ -8,7 +8,7 @@ defmodule MixTestWatch.Mixfile do
     [
       app: :mix_test_watch,
       version: @version,
-      elixir: "~> 1.5",
+      elixir: "~> 1.12",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -42,7 +42,7 @@ defmodule MixTestWatch.Mixfile do
       # App env state test helper
       {:temporary_env, "~> 2.0", only: :test},
       # Documentation generator
-      {:ex_doc, "~> 0.34", only: :dev, runtime: false, warn_if_outdated: true},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false, warn_if_outdated: true}
     ]
   end
 

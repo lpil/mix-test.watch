@@ -42,7 +42,7 @@ defmodule MixTestWatch.Mixfile do
       # App env state test helper
       {:temporary_env, "~> 2.0", only: :test},
       # Documentation generator
-      {:ex_doc, "~> 0.34", only: :dev, runtime: false, warn_if_outdated: true},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false, warn_if_outdated: true}
     ]
   end
 

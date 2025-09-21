@@ -15,37 +15,43 @@ permissions:
 
 jobs:
   test:
-    name: Test on OTP ${{matrix.otp}} + Elixir ${{matrix.elixir}}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # TODO: Consider which matrix combinations are worth testing
-        # otp: ['25', '26', '27']
-        # elixir: ['1.14', '1.15', '1.16', '1.17', '1.18']
-        otp: ['27']
-        elixir: ['1.18']
+        include:
+          - pair:
+              otp: "28"
+              elixir: "1.19"
+            lint: true
+          - pair:
+              otp: "27"
+              elixir: "1.18"
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1.18.2
+    - uses: erlef/setup-beam@v1
       with:
-        otp-version: ${{matrix.otp}}
-        elixir-version: ${{matrix.elixir}}
+        otp-version: ${{matrix.pair.otp}}
+        elixir-version: ${{matrix.pair.elixir}}
 
     - name: Restore dependencies cache
       uses: actions/cache@v4
       with:
         path: deps
-        key: ${{ runner.os }}-mix-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
+        key: ${{ runner.os }}-mix-${{ matrix.pair.otp }}-${{ matrix.pair.elixir }}-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
-          ${{ runner.os }}-mix-${{ matrix.otp }}-${{ matrix.elixir }}-
+          ${{ runner.os }}-mix-${{ matrix.pair.otp }}-${{ matrix.pair.elixir }}-
 
-    - name: Install dependencies
-      run: mix deps.get
+    - run: mix deps.get
 
-    - name: Compile strict
-      run: mix compile --warnings-as-errors
+    - run: mix deps.unlock --check-unused
+      if: ${{ matrix.lint }}
 
-    - name: Run tests
-      run: mix test
+    - run: mix deps.compile
+
+    - run: mix compile --warnings-as-errors
+
+    - run: mix test
+
+    - run: mix format --check-formatted
+      if: ${{ matrix.lint }}

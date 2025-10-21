@@ -2,13 +2,13 @@ defmodule MixTestWatch.Mixfile do
   use Mix.Project
 
   @source_url "https://github.com/lpil/mix-test.watch"
-  @version "1.3.0"
+  @version "1.4.0"
 
   def project do
     [
       app: :mix_test_watch,
       version: @version,
-      elixir: "~> 1.5",
+      elixir: "~> 1.18",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),

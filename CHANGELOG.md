@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.0 - 2025-10-21
+
+- Updated for Elixir v1.19.
+
 ## v1.3.0 - 2025-06-03
 
 - Updated for OTP28.

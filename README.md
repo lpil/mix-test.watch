@@ -25,7 +25,7 @@ def deps do
 end
 ```
 
-Optionally, add `preferred_cli_env: ["test.watch": :test]` for running `mix test.watch` in `:test` env by default.
+Optionally, add `preferred_envs: ["test.watch": :test]` for running `mix test.watch` in `:test` env by default.
 It prevents the task from running `:dev` env config scripts.
 
 ```elixir

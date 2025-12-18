@@ -30,13 +30,11 @@ It prevents the task from running `:dev` env config scripts.
 
 ```elixir
 # mix.exs
-def project do
+def cli do
   [
-    ...
-    preferred_cli_env: [
+    preferred_envs: [
       "test.watch": :test
-    ],
-    ...
+    ]
   ]
 end
 ```
@@ -59,9 +57,9 @@ tool after my tests I would do so like this.
 
 ```elixir
 # config/config.exs
-use Mix.Config
+import Config
 
-if Mix.env == :dev do
+if config_env() == :dev do
   config :mix_test_watch,
     tasks: [
       "test",
@@ -103,9 +101,9 @@ enable this option in your `config/dev.exs` as follows:
 
 ```elixir
 # config/config.exs
-use Mix.Config
+import Config
 
-if Mix.env == :dev do
+if config_env() == :dev do
   config :mix_test_watch,
     clear: true
 end
@@ -118,9 +116,9 @@ patterns to your config in `config/config.exs`:
 
 ```elixir
 # config/config.exs
-use Mix.Config
+import Config
 
-if Mix.env == :dev do
+if config_env() == :dev do
   config :mix_test_watch,
     exclude: [~r/db_migration\/.*/,
               ~r/useless_.*\.exs/]
@@ -135,9 +133,9 @@ To watch files with extensions other than the default (`.erl`, `.ex`, `.exs`, `.
 
 ```elixir
 # config/config.exs
-use Mix.Config
+import Config
 
-if Mix.env == :dev do
+if config_env() == :dev do
   config :mix_test_watch,
     extra_extensions: [".rs"]
 end

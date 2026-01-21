@@ -10,7 +10,8 @@ defmodule MixTestWatch.PortRunnerTest do
 
       expected =
         "MIX_ENV=test elixir --erl \"-elixir ansi_enabled true\" -S mix do run -e " <>
-          "'Application.put_env(:elixir, :ansi_enabled, true);' + " <> "test --exclude integration"
+          "'Application.put_env(:elixir, :ansi_enabled, true);' + " <>
+          "test --exclude integration"
 
       assert PortRunner.build_tasks_cmds(config) == expected
     end

@@ -66,7 +66,7 @@ defmodule MixTestWatch.Config do
 
   defp get_excluded do
     Application.get_env(:mix_test_watch, :exclude, @default_exclude)
-    |> Enum.map(fn 
+    |> Enum.map(fn
       pattern when is_binary(pattern) -> Regex.compile!(pattern)
       pattern = %Regex{} -> pattern
     end)

@@ -14,7 +14,7 @@ defmodule MixTestWatch.Mixfile do
       deps: deps(),
       docs: docs(),
       name: "mix test.watch",
-      xref: [exclude: [IEx]],
+      elixirc_options: [no_warn_undefined: [IEx]],
       description: "Automatically run tests when files change",
       package: [
         maintainers: ["Louis Pilfold"],

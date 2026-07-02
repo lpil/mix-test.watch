@@ -141,6 +141,19 @@ if config_env() == :dev do
 end
 ```
 
+## Watching files in other locations
+
+To watch files in locations other than the project that `mix test.watch` is run within, add those paths to `extra_directories:` in your config:
+
+```elixir
+# config/config.exs
+import Config
+
+if Enum.member?([:dev, :test], config_env()) do
+  config :mix_test_watch, extra_directories: ["../other", "/home/user/examples"]
+end
+```
+
 ## Compatibility Notes
 
 On Linux you may need to install `inotify-tools`.

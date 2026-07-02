@@ -10,6 +10,7 @@ defmodule MixTestWatch.Config do
   @default_exclude ["\\\.#", "priv/repo/migrations"]
   @default_extra_extensions []
   @default_cli_executable ~s(elixir --erl "-elixir ansi_enabled true" -S mix)
+  @default_directories [Path.absname("")]
 
   defstruct tasks: @default_tasks,
             clear: @default_clear,
@@ -17,6 +18,7 @@ defmodule MixTestWatch.Config do
             runner: @default_runner,
             exclude: @default_exclude,
             extra_extensions: @default_extra_extensions,
+            directories: @default_directories,
             cli_executable: @default_cli_executable,
             cli_args: []
 
@@ -28,6 +30,7 @@ defmodule MixTestWatch.Config do
           exclude: [String.t()],
           extra_extensions: [String.t()],
           cli_executable: String.t(),
+          directories: [String.t()],
           cli_args: [String.t()]
         }
 
@@ -43,6 +46,7 @@ defmodule MixTestWatch.Config do
       runner: get_runner(),
       exclude: get_excluded(),
       extra_extensions: get_extra_extensions(),
+      directories: get_directories(),
       cli_executable: get_cli_executable(),
       cli_args: cli_args
     }
@@ -66,10 +70,14 @@ defmodule MixTestWatch.Config do
 
   defp get_excluded do
     Application.get_env(:mix_test_watch, :exclude, @default_exclude)
-    |> Enum.map(fn 
+    |> Enum.map(fn
       pattern when is_binary(pattern) -> Regex.compile!(pattern)
       pattern = %Regex{} -> pattern
     end)
+  end
+
+  def get_directories do
+    @default_directories ++ List.wrap(Application.get_env(:mix_test_watch, :extra_directories, []))
   end
 
   defp get_cli_executable do

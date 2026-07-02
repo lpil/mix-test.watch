@@ -29,7 +29,8 @@ defmodule MixTestWatch.Watcher do
   @spec init(String.t()) :: {:ok, Keyword.t()}
 
   def init(_) do
-    opts = [dirs: [Path.absname("")], name: :mix_test_watcher]
+    config = get_config()
+    opts = [dirs: config.directories, name: :mix_test_watcher]
 
     case FileSystem.start_link(opts) do
       {:ok, _} ->

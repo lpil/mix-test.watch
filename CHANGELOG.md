@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Replaced the `xref: [exclude: ...]` project option, deprecated since Elixir
+  v1.20, with `elixirc_options: [no_warn_undefined: ...]`.
+
 ## v1.4.0 - 2025-10-21
 
 - Updated for Elixir v1.19.
